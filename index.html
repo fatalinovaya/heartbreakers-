@@ -3,671 +3,383 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PANDORA'S BOX — The Heartbreakers Ball Issue · MMXXV</title>
+<title>PANDORA'S BOX — The Heartbreakers Issue · MMXXV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* =======================================================================
-   PANDORA'S BOX — THE HEARTBREAKERS BALL ISSUE (v5 · журнал)
-   Vogue-glossy / art-house. Один прокручиваемый номер.
-   Правки текста/ассетов — CONFIG внизу.
+   PANDORA'S BOX — THE HEARTBREAKERS ISSUE — флипбук-зин (StPageFlip)
+   Editorial / brutalist. Листается как журнал. Тексты/ассеты — в разметке.
    ======================================================================= */
 :root{
-  --bg:#0b0a0a; --paper:#0f0e0e; --ink:#efe7db; --cream:#f4eee2; --dim:#9a9186; --faint:#5f574d;
-  --blood:#7c1a24; --red:#b0000f; --gold:#c2a15a; --line:#241f1c;
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --mono:'Space Mono',ui-monospace,monospace;
-  --script:'Pinyon Script',cursive;
-  --neon:#b16cff;
+  --black:#0b0a0a; --paper:#f2ede3; --ink:#12100f; --pink:#ff2d78; --red:#e6122a;
+  --gold:#c2a15a; --mut:#8a847a;
+  --disp:'Anton',Impact,sans-serif; --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Archivo',system-ui,sans-serif; --mono:'Space Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:hidden;cursor:default}
-img,video{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-.mono{font-family:var(--mono);text-transform:uppercase}
-.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
-.grain{position:fixed;inset:0;pointer-events:none;z-index:95;opacity:.04;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html,body{height:100%}
+body{background:#050505;color:var(--ink);font-family:var(--sans);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background-image:radial-gradient(ellipse at 50% 30%,#1a1416,#050505 70%)}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;
+  align-items:center;padding:14px 22px;color:#e9e3d8;mix-blend-mode:difference;pointer-events:none}
+.topbar .b{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+#stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:44px 12px}
+#flipbook{background:transparent}
+.nav{position:fixed;bottom:18px;left:0;right:0;z-index:20;display:flex;gap:16px;justify-content:center;align-items:center}
+.nav button{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  background:rgba(0,0,0,.5);color:#e9e3d8;border:1px solid #3a3a3a;border-radius:100px;padding:9px 18px;cursor:pointer;backdrop-filter:blur(4px)}
+.nav button:hover{background:#e9e3d8;color:#000}
+.nav .pg{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#9a948a;min-width:70px;text-align:center}
 
-/* PRELOADER (heart fill) + INTRO */
-#intro{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center;text-align:center;transition:opacity 1s ease}
-#intro.gone{opacity:0;pointer-events:none}
-#pre{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .8s ease}
-#pre.hide{opacity:0;pointer-events:none}
-#pre .fest{font-family:var(--mono);font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--dim)}
-.heart-load{width:min(170px,42vw);height:auto;filter:drop-shadow(0 0 30px rgba(176,0,20,.3))}
-#pre .count{font-family:var(--mono);font-size:14px;letter-spacing:.3em;color:var(--ink)}
-#pre .now{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint)}
-#intro .card{position:absolute;opacity:0;transform:translateY(8px);transition:opacity 1s,transform 1s;padding:0 8vw}
-#intro .card.on{opacity:1;transform:none}
-#intro .card .k{font-family:var(--mono);font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim)}
-#intro .card .big{font-weight:300;font-size:clamp(40px,9vw,120px);line-height:1;margin-top:18px}
-#intro .card .sub{font-style:italic;font-size:clamp(18px,2.6vw,30px);margin-top:20px}
-#intro .enter{position:absolute;bottom:12vh;opacity:0;transition:opacity 1s}
-#intro .enter.on{opacity:1}
-#intro .enter button{font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;background:transparent;color:var(--ink);border:1px solid #333;border-radius:100px;padding:16px 42px;cursor:pointer;transition:.3s}
-#intro .enter button:hover{background:var(--ink);color:#000}
-#intro .skip{position:absolute;top:5vh;right:6vw;opacity:.5;cursor:pointer}
+/* ============ PAGE base ============ */
+.page{overflow:hidden}
+.pg-in{position:relative;width:100%;height:100%;padding:34px 30px;overflow:hidden}
+.black{background:var(--black);color:#efe7db}
+.paper{background:var(--paper);color:var(--ink)}
+.pink{background:var(--pink);color:#12100f}
+.red{background:var(--red);color:#f7efe6}
+.cap{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.kick{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase}
+.serif{font-family:var(--serif)}
+.disp{font-family:var(--disp);text-transform:uppercase;line-height:.86;letter-spacing:.005em}
+.foot{position:absolute;left:30px;right:30px;bottom:16px;display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:75;display:flex;align-items:center;justify-content:space-between;padding:16px 5vw;mix-blend-mode:difference;opacity:0;transition:opacity .8s}
-body.entered .nav{opacity:1}
-.nav .brand{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase}
-.nav .links{display:flex;gap:18px}
-.nav .links a{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
-.nav .sound{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:1px solid #444;border-radius:100px;padding:6px 12px}
-@media(max-width:900px){.nav .links{display:none}}
+.ph{background:#15100f;position:relative;overflow:hidden}
+.ph::before{content:attr(data-l);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6a625a}
+.ph.g{background:radial-gradient(ellipse at 45% 32%,#3a2a2e,#0c0a0a 78%)}
 
-/* COVER */
-.cover{position:relative;height:100dvh;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
-.cover video,.cover .cph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cover .cph{background:radial-gradient(ellipse at 50% 40%,#221a1c,#0b0a0a 76%)}
-.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.15) 42%,rgba(0,0,0,.8));z-index:1}
-.cover .masthead{position:relative;z-index:2;text-align:center;padding:9vh 6vw 0}
-.cover .masthead .brand{font-weight:500;font-size:clamp(40px,9vw,140px);letter-spacing:.06em;line-height:.9}
-.cover .masthead .issue{margin-top:14px}
-.cover .coverlines{position:relative;z-index:2;padding:0 6vw 8vh;display:flex;flex-direction:column;gap:10px}
-.cover .coverlines .cl{font-style:italic;font-size:clamp(20px,3vw,40px);line-height:1.05;max-width:16ch}
-.cover .coverlines .cl b{font-style:normal;font-weight:500}
-.cover .coverlines .cl .r{color:var(--red)}
-.cover .cornerL{position:absolute;left:5vw;bottom:8vh;z-index:2}
-.cover .cornerR{position:absolute;right:5vw;bottom:8vh;z-index:2;text-align:right}
-.cover .scrollcue{position:absolute;bottom:2.5vh;left:0;right:0;z-index:2;text-align:center;animation:pulse 2.6s infinite}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.9}}
+/* ============ COVER ============ */
+.cover{position:relative;width:100%;height:100%;background:#0b0a0a;overflow:hidden}
+.cover .bg{position:absolute;inset:0}
+.cover .bg .ph{width:100%;height:100%}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.15) 45%,rgba(0,0,0,.85))}
+.cover .top{position:absolute;top:26px;left:26px;right:26px;z-index:2;display:flex;justify-content:space-between;color:#efe7db}
+.cover .title{position:absolute;top:64px;left:0;right:0;z-index:2;text-align:center;color:#f2ede3}
+.cover .title .m{font-family:var(--disp);font-size:clamp(38px,9vw,74px);letter-spacing:.02em;line-height:.9}
+.cover .lines{position:absolute;left:26px;right:26px;bottom:70px;z-index:2;color:#f2ede3}
+.cover .lines .l{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.6vw,26px);line-height:1.08;margin-top:8px}
+.cover .lines .l b{font-style:normal;font-weight:500}
+.cover .lines .l .r{color:var(--pink)}
+.cover .barcode{position:absolute;right:26px;bottom:24px;z-index:2;color:#efe7db;text-align:right}
+.cover .issue{position:absolute;left:26px;bottom:24px;z-index:2;color:#efe7db}
 
-.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;background:#080707}
-.mq{display:inline-flex;white-space:nowrap;animation:mq 30s linear infinite}
-.mq span{font-weight:300;font-size:clamp(26px,4vw,54px);padding:0 24px}
-.mq .d{color:var(--blood)}
-@keyframes mq{to{transform:translateX(-50%)}}
+/* ============ CONTENTS / big number ============ */
+.bignum{font-family:var(--disp);font-size:min(46vh,300px);line-height:.8;color:var(--ink)}
+.split{display:grid;grid-template-columns:1fr 1fr;height:100%}
+.split>div{display:flex;flex-direction:column;justify-content:center;padding:24px}
+.toc a{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(0,0,0,.18);color:inherit;text-decoration:none}
+.toc .n{font-family:var(--mono);font-size:11px;color:var(--red);width:30px}
+.toc .t{font-family:var(--serif);font-size:clamp(16px,2.4vw,24px);flex:1}
+.toc .d{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
 
-.sec{padding:14vh 6vw;position:relative}
-.dept{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:7vh}
-.dept h2{font-weight:300;font-size:clamp(32px,5.5vw,74px)}
-.dept .pg{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--gold)}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s,transform 1s}
-.reveal.in{opacity:1;transform:none}
+/* ============ EDITOR ============ */
+.letter{font-family:var(--sans);font-size:clamp(11px,1.5vw,14px);line-height:1.55;column-count:1}
+.letter p{margin-bottom:.9em}
+.letter p:first-of-type::first-letter{font-family:var(--disp);float:left;font-size:4.4em;line-height:.7;padding:6px 10px 0 0;color:var(--red)}
 
-/* CONTENTS */
-.contents{max-width:900px;margin:0 auto}
-.contents .row{display:flex;align-items:baseline;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);cursor:pointer}
-.contents .row .n{font-family:var(--mono);font-size:12px;color:var(--gold);width:44px}
-.contents .row .t{font-size:clamp(22px,3vw,34px);flex:1}
-.contents .row .d{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.contents .row:hover .t{font-style:italic}
+/* ============ FILM REVIEW ============ */
+.rev{display:grid;grid-template-rows:auto auto 1fr auto;height:100%;gap:10px}
+.rev .ttl{font-family:var(--disp);font-size:clamp(34px,8vw,72px);line-height:.82}
+.rev .stars{color:var(--red);letter-spacing:2px;font-size:14px}
+.rev .body{font-size:clamp(10px,1.4vw,12.5px);line-height:1.5;column-count:2;column-gap:18px}
+.rev .pull{font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,30px);line-height:1.1;border-left:2px solid var(--red);padding-left:12px}
 
-/* EDITOR letter */
-.letter{max-width:820px;margin:0 auto;font-size:clamp(18px,1.7vw,22px);line-height:1.7;color:var(--cream)}
-.letter p{margin-bottom:1.2em}
-.letter p:first-of-type::first-letter{font-family:var(--serif);font-weight:500;float:left;font-size:5.4em;line-height:.72;padding:8px 14px 0 0;color:var(--gold)}
-.letter .sign{font-family:var(--script);font-size:38px;color:var(--gold);margin-top:10px}
+/* ============ PULL QUOTE (interview) ============ */
+.bigquote{font-family:var(--sans);font-weight:700;font-size:clamp(26px,5.4vw,52px);line-height:1.02;letter-spacing:-.01em}
+.bigquote .op{color:var(--red)}
 
-/* FILMS */
-.films{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px}
-.film{position:relative;cursor:pointer;background:var(--paper);overflow:hidden}
-.film .poster{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000}
-.film .poster .pfoto,.film .poster video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92;transition:.6s}
-.film .poster .pph{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#221a1c,#000 78%)}
-.film:hover .poster .pfoto,.film:hover .poster video{opacity:1;transform:scale(1.05)}
-.film .stars{position:absolute;left:16px;top:14px;z-index:4;color:var(--gold);font-size:13px;letter-spacing:2px}
-.film .award{position:absolute;right:14px;top:14px;z-index:4;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:100px;padding:4px 9px;background:rgba(0,0,0,.4)}
-.film .titleover{position:absolute;left:18px;right:18px;bottom:20px;z-index:3;mix-blend-mode:difference;pointer-events:none}
-.film .titleover .ft{font-weight:400;font-size:clamp(26px,2.8vw,40px);line-height:.94}
-.film .titleover .fm{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.8;margin-top:6px}
-.film .titleover .fl{max-height:0;opacity:0;overflow:hidden;transition:.5s;font-style:italic;font-size:clamp(16px,1.6vw,20px)}
-.film:hover .titleover .fl{opacity:1;max-height:80px;margin-top:8px}
-.film.neon .titleover{mix-blend-mode:normal}
-.film.neon .titleover .ft{color:#f2e6ff;text-shadow:0 0 6px var(--neon),0 0 18px var(--neon)}
-.film.calligraphy .titleover{mix-blend-mode:normal}
-.film.calligraphy .titleover .ft{font-family:var(--script);font-size:clamp(34px,3.6vw,54px);color:var(--gold)}
-.film .cap{display:flex;justify-content:space-between;padding:12px 4px 2px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+/* ============ FASHION ============ */
+.unap{font-family:var(--serif);font-size:clamp(34px,7vw,64px);line-height:.9}
+.unap .u{color:var(--red)}
+.lookgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.lookgrid .it{display:flex;flex-direction:column;gap:5px}
+.lookgrid .it .ph{aspect-ratio:3/4}
+.lookgrid .it .nm{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase}
+.lookgrid .it .pr{font-family:var(--mono);font-size:7.5px;color:var(--mut)}
 
-/* FILM PAGE (review) */
-#filmpage{position:fixed;inset:0;z-index:118;background:rgba(7,6,6,.97);display:none;align-items:center;justify-content:center;padding:5vh 5vw}
-#filmpage.open{display:flex}
-.fp-inner{max-width:1150px;width:100%;max-height:90vh;overflow:auto;display:grid;grid-template-columns:1.05fr 1fr;background:var(--paper);border:1px solid var(--line)}
-@media(max-width:820px){.fp-inner{grid-template-columns:1fr}}
-.fp-img{position:relative;background:#000;min-height:340px}
-.fp-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.fp-img .iph{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#221a1c,#000 80%)}
-.fp-img .stamp{position:absolute;left:16px;top:16px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.5);padding:6px 10px}
-.fp-text{padding:clamp(26px,3vw,48px);display:flex;flex-direction:column}
-.fp-kick{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.fp-title{font-weight:300;font-size:clamp(40px,6vw,86px);line-height:.95}
-.fp-title.neon{color:#f2e6ff;text-shadow:0 0 8px var(--neon),0 0 22px var(--neon)}
-.fp-title.calligraphy{font-family:var(--script);color:var(--gold);font-size:clamp(52px,9vw,120px)}
-.fp-stars{color:var(--gold);letter-spacing:3px;margin-top:14px;font-size:16px}
-.fp-meta{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:16px}
-.fp-pull{font-style:italic;font-size:clamp(20px,2.2vw,30px);line-height:1.25;color:var(--cream);margin:24px 0;padding-left:18px;border-left:2px solid var(--gold)}
-.fp-syn{font-weight:300;font-size:clamp(16px,1.4vw,19px);line-height:1.65;color:#d6cec2}
-.fp-look{margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.9}
-.fp-look b{color:var(--gold)}
-.fp-award{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:16px}
-.fp-watch{margin-top:26px;align-self:flex-start;border:1px solid var(--ink);border-radius:100px;padding:14px 34px;font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;transition:.3s}
-.fp-watch:hover{background:var(--ink);color:#000}
-#filmpage .fp-close{position:absolute;top:4vh;right:5vw;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.2em;opacity:.75;z-index:2}
+/* ============ COLLAGE (party) ============ */
+.collage{position:relative;width:100%;height:100%}
+.collage .word{position:absolute;font-family:var(--disp);color:var(--pink);font-size:min(30vh,220px);line-height:.8;z-index:1}
+.collage .tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:6px;z-index:2;mix-blend-mode:normal}
+.collage .tiles .ph{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
 
-/* PLAYER title-card */
-#player{position:fixed;inset:0;z-index:120;background:#000;display:none;align-items:center;justify-content:center}
-#player.open{display:flex}
-#player .close{position:absolute;top:4vh;right:5vw;z-index:3;cursor:pointer;opacity:.7;font-family:var(--mono);font-size:12px;letter-spacing:.2em}
-#player .stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative}
-.titlecard{text-align:center;padding:0 8vw}
-.titlecard .kick{font-family:var(--mono);font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;opacity:0;animation:fadein .8s .15s forwards}
-.titlecard .big2{font-weight:300;font-size:clamp(48px,11vw,150px);line-height:.92}
-.titlecard .big2 .l{display:inline-block;opacity:0;transform:translateY(34px) rotate(5deg);animation:letterin .7s forwards}
-.titlecard.neon .big2{color:#f2e6ff;text-shadow:0 0 8px var(--neon),0 0 22px var(--neon),0 0 46px var(--neon)}
-.titlecard.calligraphy .big2{font-family:var(--script);color:var(--gold);font-size:clamp(56px,14vw,200px)}
-.titlecard .credits{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-top:30px;opacity:0;animation:fadein 1s 1.1s forwards}
-.titlecard .prog{width:min(320px,60vw);height:1px;background:#2a2a2a;margin:32px auto 0;overflow:hidden}
-.titlecard .prog i{display:block;height:100%;width:0;background:var(--ink);transition:width 5s linear}
-@keyframes letterin{to{opacity:1;transform:none}}
-@keyframes fadein{to{opacity:1}}
-#player video{max-width:100vw;max-height:100vh}
-#player .pbars,#player .pbars::after{content:"";position:absolute;left:0;right:0;height:8vh;background:#000;z-index:2}
-#player .pbars{top:0}#player .pbars::after{position:absolute;bottom:0;top:auto}
+/* ============ AWARDS ============ */
+.laurelwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;text-align:center}
+.laurel{width:64%;color:var(--gold)}
+.laurel svg{width:100%;height:auto}
 
-/* galleries (red carpet / party) */
-.plates{max-width:1300px;margin:0 auto;column-count:3;column-gap:24px}
-@media(max-width:900px){.plates{column-count:2}}
-@media(max-width:560px){.plates{column-count:1}}
-.plate{break-inside:avoid;margin-bottom:24px}
-.plate .fr{position:relative;overflow:hidden;background:var(--paper)}
-.plate .fr img{width:100%}
-.plate .fr .pph{aspect-ratio:3/4;background:radial-gradient(ellipse at 42% 32%,#221a1c,#000 78%)}
-.plate .cp{display:flex;justify-content:space-between;padding:10px 2px 0;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.plate .cp .no{color:var(--ink)}
-
-/* interviews */
-.iv{max-width:900px;margin:0 auto}
-.iv .q{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-top:26px}
-.iv .a{font-size:clamp(19px,2vw,26px);line-height:1.4;margin-top:8px;color:var(--cream)}
-.iv .who{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
-
-/* fashion (Contrabounds) */
-.looks{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px}
-.look{position:relative;background:var(--paper);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
-.look .pic{position:relative;aspect-ratio:3/4;overflow:hidden}
-.look .pic img{width:100%;height:100%;object-fit:cover;transition:.8s}
-.look:hover .pic img{transform:scale(1.05)}
-.look .pic .lph{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#221a1c,#000 80%)}
-.look .info{padding:16px 16px 20px}
-.look .info .n{font-size:clamp(18px,1.8vw,22px)}
-.look .info .code{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:8px}
-.look .info .mat{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:6px}
-.look .info .price{font-family:var(--mono);font-size:12px;color:var(--ink);margin-top:10px}
-.fash-lead{max-width:820px;margin:0 auto 7vh;text-align:center;font-style:italic;font-size:clamp(20px,2.4vw,30px);line-height:1.4;color:var(--cream)}
-
-/* awards */
-.awnote{text-align:center;max-width:640px;margin:0 auto 8vh;font-style:italic;font-size:clamp(19px,2.2vw,28px);color:var(--cream)}
-.laurels{max-width:1100px;margin:0 auto 9vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:30px}
-.laurel-badge{position:relative;text-align:center;color:var(--gold);padding:10px}
-.laurel-badge svg{width:150px;height:auto;margin:0 auto;display:block}
-.laurel-badge .txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.laurel-badge .cat{font-size:19px;color:var(--ink);max-width:120px;line-height:1.1}
-.laurel-badge .by{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.trophies{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px}
-.trophy{position:relative;background:var(--paper);border:1px solid var(--line);overflow:hidden}
-.trophy .pic{position:relative;aspect-ratio:3/4;overflow:hidden}
-.trophy .pic img{width:100%;height:100%;object-fit:cover}
-.trophy .pic .tph{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#2a2110,#000 80%);display:flex;align-items:center;justify-content:center}
-.trophy .pic .tph::after{content:"\2665";font-size:56px;color:var(--gold);opacity:.5}
-.trophy .info{padding:16px}
-.trophy .info .aw{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-.trophy .info .n{font-size:22px;margin-top:6px}
-.trophy .info .c{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:6px}
-
-/* ANNIVERSARY collage animation */
-.anniv-note{max-width:760px;margin:0 auto 7vh;text-align:center;font-size:clamp(18px,1.8vw,24px);line-height:1.6;color:var(--cream)}
-.collage{position:relative;max-width:1100px;height:min(70vh,620px);margin:0 auto;overflow:hidden;border:1px solid var(--line);background:#000}
-.collage .c-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease,transform 6s ease}
-.collage .c-img.show{opacity:.92;transform:scale(1.08)}
-.collage .c-ph{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#221a1c,#000 80%)}
-.collage .c-cap{position:absolute;left:0;right:0;bottom:0;padding:20px;z-index:3;background:linear-gradient(transparent,rgba(0,0,0,.8));font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-.hosts{max-width:1200px;margin:9vh auto 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
-.host{position:relative;overflow:hidden;background:var(--paper);aspect-ratio:3/4}
-.host img{width:100%;height:100%;object-fit:cover;filter:grayscale(.3) contrast(1.04);transition:.8s}
-.host:hover img{filter:none;transform:scale(1.05)}
-.host .hph{position:absolute;inset:0;background:radial-gradient(ellipse at 45% 30%,#221a1c,#000 80%)}
-.host .cr{position:absolute;left:0;right:0;bottom:0;padding:12px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(transparent,rgba(0,0,0,.85))}
-
-/* afisha */
-.poster-wrap{display:flex;justify-content:center}
-.poster{position:relative;width:min(760px,92vw);aspect-ratio:4/5;background:#050505;border:1px solid var(--line);display:grid;grid-template-rows:auto 1fr auto;padding:clamp(20px,3.4vw,40px);overflow:hidden}
-.poster .p-top{font-family:var(--mono);text-align:center;letter-spacing:.4em;font-size:clamp(10px,1.5vw,14px);text-transform:uppercase;color:var(--dim)}
-.poster .p-mid{position:relative;margin:clamp(14px,2.4vw,24px) 0;overflow:hidden}
-.poster .p-mid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.poster .p-mid .mph{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#221a1c,#050505 78%)}
-.poster .p-side{position:absolute;top:0;bottom:0;display:flex;align-items:center;pointer-events:none}
-.poster .p-side span{writing-mode:vertical-rl;font-family:var(--mono);letter-spacing:.28em;text-transform:uppercase;font-size:clamp(10px,1.3vw,13px);color:var(--dim)}
-.poster .p-left{left:clamp(4px,1vw,12px)}.poster .p-left span{transform:rotate(180deg)}
-.poster .p-right{right:clamp(4px,1vw,12px)}
-.poster .p-bottom{font-weight:400;text-align:center;font-size:clamp(28px,5.6vw,66px);letter-spacing:.05em;line-height:1}
-.poster .p-bottom .r{color:var(--blood)}
-.poster .p-hd{position:absolute;left:0;right:0;bottom:clamp(8px,1.4vw,14px);text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--dim)}
-
-.footer{padding:14vh 6vw 12vh;text-align:center;border-top:1px solid var(--line)}
-.footer .big{font-style:italic;font-weight:300;font-size:clamp(40px,9vw,120px);line-height:.95}
-.footer .row{margin-top:6vh;display:flex;justify-content:center;gap:28px;flex-wrap:wrap}
-.footer .credit{margin-top:9vh;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-.footer .credit .love{color:var(--blood)}
+@media(max-width:520px){ .rev .body{column-count:1} }
 </style>
 </head>
 <body>
-<div class="grain"></div>
-
-<nav class="nav">
-  <a class="brand" href="#cover" id="navBrand"></a>
-  <div class="links" id="navLinks"></div>
-  <span class="sound" id="soundToggle">♪ sound off</span>
-</nav>
-
-<div id="intro">
-  <span class="skip lbl" id="skip">skip ›</span>
-  <div id="pre">
-    <div class="fest" id="preFest"></div>
-    <svg class="heart-load" viewBox="0 0 200 200" aria-hidden="true">
-      <defs><clipPath id="hclip"><path d="M100 182 C44 130 14 96 14 58 C14 30 36 14 60 14 C80 14 94 28 100 44 C106 28 120 14 140 14 C164 14 186 30 186 58 C186 96 156 130 100 182 Z"/></clipPath></defs>
-      <path d="M100 182 C44 130 14 96 14 58 C14 30 36 14 60 14 C80 14 94 28 100 44 C106 28 120 14 140 14 C164 14 186 30 186 58 C186 96 156 130 100 182 Z" fill="#160306"/>
-      <g clip-path="url(#hclip)"><rect id="fluid" x="0" y="200" width="200" height="200" fill="#b0000f"/></g>
-      <path d="M100 182 C44 130 14 96 14 58 C14 30 36 14 60 14 C80 14 94 28 100 44 C106 28 120 14 140 14 C164 14 186 30 186 58 C186 96 156 130 100 182 Z" fill="none" stroke="#e7c4c9" stroke-width="2.4"/>
-    </svg>
-    <div class="count" id="preCount">0%</div>
-    <div class="now" id="preNow"></div>
-  </div>
-  <div class="card" data-i="0"><div class="k" id="c0k"></div></div>
-  <div class="card" data-i="1"><div class="big serif" id="c1"></div></div>
-  <div class="card" data-i="2"><div class="sub serif" id="c2"></div></div>
-  <div class="card" data-i="3"><div class="k" id="c3"></div></div>
-  <div class="enter" id="enterWrap"><button id="enterBtn"></button></div>
+<div class="topbar">
+  <span class="b">Pandora's Box ©</span>
+  <span class="b">The Heartbreakers Issue — MMXXV</span>
 </div>
 
-<section class="cover" id="cover">
-  <div class="cph" id="coverSlot"></div>
-  <div class="masthead">
-    <div class="brand serif" id="mhBrand"></div>
-    <div class="issue lbl" id="mhIssue"></div>
+<div id="stage">
+  <div id="flipbook">
+
+    <!-- 1. COVER -->
+    <div class="page" data-density="hard">
+      <div class="cover">
+        <div class="bg"><div class="ph g" data-l="cover — assets/nyc/hero"></div></div>
+        <div class="top"><span class="kick">Nº 01 · February</span><span class="kick">New York</span></div>
+        <div class="title">
+          <div class="m">Pandora's</div><div class="m">Box</div>
+        </div>
+        <div class="lines">
+          <div class="l">The masked dinner that <b>broke the city open</b></div>
+          <div class="l">Seven silent films, <b class="r">one golden heart</b></div>
+          <div class="l">Inside <b>Contrabounds</b> — the label of the ball</div>
+        </div>
+        <div class="issue kick">The Heartbreakers Issue</div>
+        <div class="barcode kick">be our<br>valentine</div>
+      </div>
+    </div>
+
+    <!-- 2. MASTHEAD -->
+    <div class="page">
+      <div class="pg-in black">
+        <div class="kick" style="color:var(--pink)">Masthead</div>
+        <div class="disp" style="font-size:clamp(30px,7vw,56px);margin-top:10px">The<br>Heartbreakers<br>Issue</div>
+        <div style="margin-top:20px;font-size:12px;line-height:1.7;max-width:34ch;color:#cfc7bc">
+          A once-a-year magazine from the masked dinner known only as Pandora's Box.
+          Films screened in silence. Faces left at the table. Clothes by Contrabounds.
+        </div>
+        <div style="margin-top:22px" class="cap">Editors — @fatalinovaya × @dreamxd0ki</div>
+        <div class="cap">Season — MMXXV · Uranus in Gemini</div>
+        <div class="foot"><span>Pandora's Box</span><span>02</span></div>
+      </div>
+    </div>
+
+    <!-- 3. CONTENTS -->
+    <div class="page">
+      <div class="pg-in paper">
+        <div class="split">
+          <div><div class="bignum">01</div></div>
+          <div>
+            <div class="kick" style="color:var(--red)">Contents</div>
+            <nav class="toc" style="margin-top:8px">
+              <a><span class="n">02</span><span class="t serif">Masthead</span><span class="d">who we are</span></a>
+              <a><span class="n">04</span><span class="t serif">Editor's Letter</span><span class="d">from the hosts</span></a>
+              <a><span class="n">06</span><span class="t serif">The Films</span><span class="d">reviews</span></a>
+              <a><span class="n">12</span><span class="t serif">Interview</span><span class="d">the cast speaks</span></a>
+              <a><span class="n">16</span><span class="t serif">The Fashion</span><span class="d">Contrabounds</span></a>
+              <a><span class="n">22</span><span class="t serif">The Party</span><span class="d">in pictures</span></a>
+              <a><span class="n">28</span><span class="t serif">The Golden Heart</span><span class="d">awards</span></a>
+            </nav>
+          </div>
+        </div>
+        <div class="foot"><span>Contents</span><span>03</span></div>
+      </div>
+    </div>
+
+    <!-- 4. EDITOR'S LETTER -->
+    <div class="page">
+      <div class="pg-in black">
+        <div class="split">
+          <div style="justify-content:flex-start;padding-top:30px">
+            <div class="kick" style="color:var(--pink)">Editor's Letter</div>
+            <div class="letter" style="margin-top:12px;color:#d8d0c5">
+              <p>Every February we open this house down to its basement, and every February people arrive as themselves and leave as someone they only imagined.</p>
+              <p>Inside: seven films screened in silence, the faces that walked our carpet, the clothes they were reborn in, and the golden heart we handed to the ones who broke the room open.</p>
+              <p>Read it the way you'd wear a mask — as a beautiful way to disappear. Be our valentine.</p>
+              <p style="font-family:var(--serif);font-style:italic;color:var(--gold)">— The Hosts</p>
+            </div>
+          </div>
+          <div style="justify-content:center;align-items:flex-end">
+            <div class="disp" style="font-size:min(42vh,260px);color:var(--pink);line-height:.78;text-align:right">MM<br>XXV</div>
+          </div>
+        </div>
+        <div class="foot"><span>New year, same me</span><span>04</span></div>
+      </div>
+    </div>
+
+    <!-- 5. FILM REVIEW -->
+    <div class="page">
+      <div class="pg-in paper">
+        <div class="rev">
+          <div>
+            <div class="kick" style="color:var(--red)">Review · A Pandora's Box Picture</div>
+            <div class="ttl">Rose<br>Neuf</div>
+            <div class="stars">♥♥♥♥♥</div>
+          </div>
+          <div class="pull">By the last course, no one — not even she — remembers who she came as.</div>
+          <div class="body">
+            <p>On the ninth February she returns to the same masked table. Each rose she is handed marks a face she has already shed. A hypnotic, wordless spiral about the vanity of coming back.</p>
+            <p>Dir. Fatalinovaya · MMXXV · silent · 00:42. Winner — Best Film, The Golden Heart. The look: Contrabounds Lace Collar Latex Mini Dress, Long Chain Necklace, Pointed Toe Pumps.</p>
+          </div>
+          <div></div>
+        </div>
+        <div class="foot"><span>The Films</span><span>06</span></div>
+      </div>
+    </div>
+
+    <!-- 6. FILM STILL full-bleed -->
+    <div class="page">
+      <div class="pg-in black" style="padding:0">
+        <div class="ph g" data-l="still — assets/nyc/films/01" style="position:absolute;inset:0"></div>
+        <div style="position:absolute;left:22px;bottom:22px;z-index:2;color:#f2ede3">
+          <div class="kick" style="color:var(--pink)">Rose Neuf — MMXXV</div>
+          <div class="disp" style="font-size:clamp(24px,6vw,44px);margin-top:6px">Nine roses,<br>one for each<br>year she<br>came back</div>
+        </div>
+        <div class="foot" style="color:#cfc7bc"><span>Still</span><span>07</span></div>
+      </div>
+    </div>
+
+    <!-- 7. INTERVIEW pull quote -->
+    <div class="page">
+      <div class="pg-in black">
+        <div class="kick" style="color:var(--pink)">Interview — The Bride</div>
+        <div class="bigquote" style="margin-top:16px;color:#f2ede3">
+          <span class="op">(“)</span> The mask is the honest part. The face is the costume — I take it off to come here.
+        </div>
+        <div class="foot"><span>The cast speaks</span><span>12</span></div>
+      </div>
+    </div>
+
+    <!-- 8. INTERVIEW columns -->
+    <div class="page">
+      <div class="pg-in paper">
+        <div class="kick" style="color:var(--red)">Contrabounds, on dressing the ball</div>
+        <div style="margin-top:14px;font-size:12px;line-height:1.55;column-count:2;column-gap:18px">
+          <p style="margin-bottom:.9em"><b>How do you design for people with no faces?</b></p>
+          <p style="margin-bottom:.9em">“You dress the silhouette and the sound — the click of latex, the drag of lace. The body becomes the sentence. Every mask at that table was cut like couture and worn like armour.”</p>
+          <p style="margin-bottom:.9em"><b>And the heart mask?</b></p>
+          <p>“A valentine you can't take off until dawn. That's the whole idea of the ball — you become the gift.”</p>
+        </div>
+        <div style="margin-top:12px" class="cap">Photo — assets/nyc/redcarpet</div>
+        <div class="ph g" data-l="portrait — redcarpet/01" style="height:34%;margin-top:8px"></div>
+        <div class="foot"><span>Interview</span><span>13</span></div>
+      </div>
+    </div>
+
+    <!-- 9. FASHION Unapologetic -->
+    <div class="page">
+      <div class="pg-in paper">
+        <div class="unap"><span class="u">U</span>napologetic</div>
+        <div style="margin-top:12px;font-size:11.5px;line-height:1.5;max-width:40ch">
+          Contrabounds constructs worlds, not clothes — nightlife, rebellion, fantasy. Latex, lace and lacquer, cut like couture. The look analysis, piece by piece.
+        </div>
+        <div class="lookgrid">
+          <div class="it"><div class="ph" data-l="looks/01"></div><span class="nm">Lace Collar Dress</span><span class="pr">CB-FW24-01 · €1,190</span></div>
+          <div class="it"><div class="ph" data-l="looks/02"></div><span class="nm">Puff Collar Top</span><span class="pr">CB-W-SS24-001 · €890</span></div>
+          <div class="it"><div class="ph" data-l="looks/05"></div><span class="nm">Corset Top Red</span><span class="pr">CB-W-01-RED · €1,450</span></div>
+          <div class="it"><div class="ph" data-l="looks/06"></div><span class="nm">Heart Mask</span><span class="pr">CB-W-07-RED · €520</span></div>
+        </div>
+        <div class="foot"><span>The Fashion — Contrabounds</span><span>16</span></div>
+      </div>
+    </div>
+
+    <!-- 10. FASHION look display grid -->
+    <div class="page">
+      <div class="pg-in black">
+        <div class="kick" style="color:var(--pink)">Contrabounds — 2025 collection · look display</div>
+        <div class="lookgrid" style="grid-template-columns:repeat(4,1fr);margin-top:14px">
+          <div class="it"><div class="ph g" data-l="look 01"></div><span class="nm" style="color:#cfc7bc">Look 01</span></div>
+          <div class="it"><div class="ph g" data-l="look 02"></div><span class="nm" style="color:#cfc7bc">Look 02</span></div>
+          <div class="it"><div class="ph g" data-l="look 03"></div><span class="nm" style="color:#cfc7bc">Look 03</span></div>
+          <div class="it"><div class="ph g" data-l="look 04"></div><span class="nm" style="color:#cfc7bc">Look 04</span></div>
+          <div class="it"><div class="ph g" data-l="look 05"></div><span class="nm" style="color:#cfc7bc">Look 05</span></div>
+          <div class="it"><div class="ph g" data-l="look 06"></div><span class="nm" style="color:#cfc7bc">Look 06</span></div>
+          <div class="it"><div class="ph g" data-l="look 07"></div><span class="nm" style="color:#cfc7bc">Look 07</span></div>
+          <div class="it"><div class="ph g" data-l="look 08"></div><span class="nm" style="color:#cfc7bc">Look 08</span></div>
+        </div>
+        <div class="foot"><span>Look display</span><span>17</span></div>
+      </div>
+    </div>
+
+    <!-- 11. PARTY collage -->
+    <div class="page">
+      <div class="pg-in" style="padding:0;background:#0b0a0a">
+        <div class="collage">
+          <div class="word" style="left:-4px;bottom:6px;">TAKE</div>
+          <div class="tiles">
+            <div class="ph g" data-l="ball/01"></div><div class="ph g" data-l="ball/02"></div><div class="ph g" data-l="ball/03"></div>
+            <div class="ph g" data-l="ball/04"></div><div class="ph g" data-l="ball/05"></div><div class="ph g" data-l="ball/06"></div>
+            <div class="ph g" data-l="ball/07"></div><div class="ph g" data-l="ball/08"></div><div class="ph g" data-l="ball/09"></div>
+          </div>
+        </div>
+        <div class="foot" style="color:#cfc7bc;z-index:3"><span>The Party</span><span>22</span></div>
+      </div>
+    </div>
+
+    <!-- 12. PARTY pink ??? -->
+    <div class="page">
+      <div class="pg-in pink">
+        <div class="disp" style="font-size:min(40vh,240px);color:#0b0a0a;line-height:.8">? ? ?</div>
+        <div style="position:absolute;right:30px;bottom:60px;max-width:22ch;font-size:11px;line-height:1.5;color:#0b0a0a">
+          The bass shoots out from the speakers, each beat thundering its way through the floor to the soles of her feet. It's spiritual, it possesses her. The club is a disco ball, and she is one of the mirror tiles.
+        </div>
+        <div class="foot" style="color:#3a0f1c"><span>Late night</span><span>23</span></div>
+      </div>
+    </div>
+
+    <!-- 13. AWARDS -->
+    <div class="page">
+      <div class="pg-in black">
+        <div class="laurelwrap">
+          <div class="kick" style="color:var(--gold)">The awards · MMXXV</div>
+          <div class="laurel" id="laurel"></div>
+          <div class="disp" style="font-size:clamp(26px,6vw,48px);color:#f2ede3">The Golden<br>Heart</div>
+          <div style="font-size:11px;color:#cfc7bc;max-width:30ch">Best Film — Rose Neuf · Best Direction — Camélia 22 · Grand Prix — Œillet Sept · Best Costume — Pivoine Deux</div>
+        </div>
+        <div class="foot"><span>Official Selection</span><span>28</span></div>
+      </div>
+    </div>
+
+    <!-- 14. BACK COVER -->
+    <div class="page" data-density="hard">
+      <div class="pg-in black" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px">
+        <div class="disp" style="font-size:clamp(30px,8vw,64px);color:#f2ede3">Come as<br>no one</div>
+        <div class="serif" style="font-style:italic;font-size:20px;color:var(--pink)">Leave as someone else.</div>
+        <div class="cap" style="margin-top:20px">@fatalinovaya × @dreamxd0ki</div>
+        <div class="cap">Pandora's Box Film Festival™ · © 2025</div>
+      </div>
+    </div>
+
   </div>
-  <div class="coverlines" id="coverlines"></div>
-  <div class="cornerL lbl" id="cornerL"></div>
-  <div class="cornerR lbl" id="cornerR"></div>
-  <div class="scrollcue lbl" id="scrollcue"></div>
-</section>
-
-<div class="marquee"><div class="mq" id="mq"></div></div>
-
-<section class="sec" id="contents">
-  <div class="dept"><h2 class="serif" id="contentsTitle"></h2><span class="pg" id="contentsPg"></span></div>
-  <div class="contents" id="contentsList"></div>
-</section>
-
-<section class="sec" id="editor">
-  <div class="dept"><h2 class="serif" id="editorTitle"></h2><span class="pg">p.02</span></div>
-  <div class="letter" id="letterBody"></div>
-</section>
-
-<section class="sec" id="films">
-  <div class="dept"><h2 class="serif" id="filmsTitle"></h2><span class="pg">p.04</span></div>
-  <div class="films" id="filmsGrid"></div>
-</section>
-
-<section class="sec" id="interviews">
-  <div class="dept"><h2 class="serif" id="ivTitle"></h2><span class="pg">p.12</span></div>
-  <div class="iv" id="ivBody"></div>
-</section>
-
-<section class="sec" id="redcarpet">
-  <div class="dept"><h2 class="serif" id="redTitle"></h2><span class="pg">p.18</span></div>
-  <div class="plates" id="redGrid"></div>
-</section>
-
-<section class="sec" id="fashion">
-  <div class="dept"><h2 class="serif" id="fashTitle"></h2><span class="pg">p.24</span></div>
-  <div class="fash-lead" id="fashLead"></div>
-  <div class="looks" id="looksGrid"></div>
-</section>
-
-<div class="marquee"><div class="mq" id="mq2"></div></div>
-
-<section class="sec" id="awards">
-  <div class="dept"><h2 class="serif" id="awardsTitle"></h2><span class="pg">p.32</span></div>
-  <div class="awnote reveal" id="awNote"></div>
-  <div class="laurels" id="laurelsRow"></div>
-  <div class="trophies" id="trophyGrid"></div>
-</section>
-
-<section class="sec" id="party">
-  <div class="dept"><h2 class="serif" id="ballTitle"></h2><span class="pg">p.40</span></div>
-  <div class="plates" id="platesGrid"></div>
-</section>
-
-<section class="sec" id="anniversary">
-  <div class="dept"><h2 class="serif" id="annivTitle"></h2><span class="pg">p.48</span></div>
-  <div class="anniv-note reveal" id="annivNote"></div>
-  <div class="collage" id="collage"><div class="c-ph"></div><div class="c-cap" id="collageCap"></div></div>
-  <div class="hosts" id="hostsGrid"></div>
-</section>
-
-<section class="sec poster-wrap" id="rsvp">
-  <div class="poster reveal">
-    <div class="p-top" id="pTop"></div>
-    <div class="p-mid"><div class="mph" id="pMph"></div></div>
-    <div class="p-side p-left"><span id="pLeft"></span></div>
-    <div class="p-side p-right"><span id="pRight"></span></div>
-    <div class="p-bottom" id="pBottom"></div>
-    <div class="p-hd" id="pHd"></div>
-  </div>
-</section>
-
-<div class="footer">
-  <div class="big serif" id="footBig"></div>
-  <div class="row" id="footRow"></div>
-  <div class="credit" id="footCredit"></div>
 </div>
 
-<div id="filmpage"><span class="fp-close" id="fpClose">✕ close</span><div class="fp-inner" id="fpInner"></div></div>
-<div id="player"><span class="close" id="playerClose">✕ close</span><div class="pbars"></div><div class="stage" id="stage"></div></div>
+<div class="nav">
+  <button id="prev">‹ prev</button>
+  <span class="pg" id="pgnum">drag the corner</span>
+  <button id="next">next ›</button>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
-/* =======================================================================
-   ▼▼▼  CONFIG — ЕДИНСТВЕННОЕ МЕСТО ДЛЯ ПРАВОК  ▼▼▼
-   ======================================================================= */
-const CONFIG = {
-  awardName:'The Golden Heart',
-  intro:{ c0:"Pandora's Box Film Festival", c1:'The Heartbreakers Issue', c2:'a magazine, once a year', c3:'you are invited', enter:'Open the issue ›', now:'filling the heart…' },
-  nav:{ brand:"Pandora's Box ©", links:[['Contents','#contents'],['Films','#films'],['Interviews','#interviews'],['Fashion','#fashion'],['Awards','#awards'],['Anniversary','#anniversary'],['RSVP','#rsvp']] },
-
-  // COVER
-  mhBrand:"PANDORA'S BOX",
-  mhIssue:'The Heartbreakers Ball Issue · MMXXV · New York',
-  coverlines:[
-    'The masked dinner that <b>broke the city open</b>',
-    'Seven silent films, <b class="r">one golden heart</b>',
-    'Inside <b>Contrabounds</b> — the label of the ball',
-  ],
-  cornerL:'№ 01 · February',
-  cornerR:'be our valentine',
-  scrollcue:'turn the page ↓',
-  marquee:['The Heartbreakers Issue','Be our valentine',"Pandora's Box",'MMXXV','Official Selection','Come as no one'],
-
-  contentsTitle:'Contents', contentsPg:'MMXXV',
-  CONTENTS:[
-    { n:'02', t:"Editor's Letter", d:'from the hosts', a:'#editor' },
-    { n:'04', t:'The Films', d:'reviews · double feature', a:'#films' },
-    { n:'12', t:'Interviews', d:'the cast speaks', a:'#interviews' },
-    { n:'18', t:'The Red Carpet', d:'who wore what', a:'#redcarpet' },
-    { n:'24', t:'The Fashion — Contrabounds', d:'look analysis', a:'#fashion' },
-    { n:'32', t:'The Golden Heart', d:'the awards', a:'#awards' },
-    { n:'40', t:'The Party', d:'the ball, in pictures', a:'#party' },
-    { n:'48', t:'Anniversary', d:'the hosts, year after year', a:'#anniversary' },
-  ],
-
-  editorTitle:"Editor's Letter",
-  letter:[
-    "Every February we open this house down to its basement, and every February the same thing happens: people arrive as themselves and leave as someone they had only imagined. This issue is the evidence.",
-    "Inside you will find seven films screened in silence, the faces that walked our carpet, the clothes they were buried and reborn in, and the golden heart we handed to the ones who broke the room open. Read it the way you'd wear a mask — as a beautiful way to disappear.",
-    "Be our valentine.",
-  ],
-  letterSign:'The Hosts',
-
-  filmsTitle:'The Films',
-  FILMS:[
-    { t:'Rose Neuf', y:'MMXXV', run:'00:42', dir:'Fatalinovaya', style:'neon', award:'Best Film', rating:5, poster:'assets/nyc/films/01.jpg', src:'assets/nyc/hero.mp4',
-      logline:'Nine roses, one for every year she came back.',
-      pull:'By the last course, no one — not even she — remembers who she came as.',
-      look:['Lace Collar Latex Mini Dress','Long Chain Necklace','Pointed Toe Pumps'],
-      synopsis:'On the ninth February she returns to the same masked table. Each rose she is handed marks a face she has already shed. A hypnotic, wordless spiral about the vanity of coming back.' },
-    { t:'Violette 03', y:'MMXXV', run:'00:38', dir:'dreamxd0ki', style:'calligraphy', award:'Best Screenplay', rating:4, poster:'assets/nyc/films/02.jpg', src:'assets/nyc/video/02.mp4',
-      logline:'Three nights, one violet.',
-      pull:'A courtship told backwards, from the last slow dance to the first stolen glance.',
-      look:['Puff Shoulder Lace Collar Top','Latex Pencil Mini Skirt'],
-      synopsis:'Two strangers — who may be the same person — trade a single wilting flower across three nights. Tender, cruel, and impossibly chic.' },
-    { t:'Œillet Sept', y:'MMXXIV', run:'00:51', dir:"Pandora's Box", style:'neon', award:'Grand Prix', rating:5, poster:'assets/nyc/films/03.jpg', src:'assets/nyc/video/03.mp4',
-      logline:'The carnation that would not wilt.',
-      pull:'Whoever holds it at sunrise must host the ball — and give up their face to do it.',
-      look:['Scallop Cutout Top','Opera Gloves'],
-      synopsis:'Seven guests pass one flower hand to hand until dawn. A ritual thriller about inheritance and the price of hosting.' },
-    { t:'Numéro 14', y:'MMXXIV', run:'00:33', dir:'Fatalinovaya', style:'outline', award:'Best Editing', rating:4, poster:'assets/nyc/films/04.jpg', src:'assets/nyc/video/04.mp4',
-      logline:'Room fourteen never opens twice.',
-      pull:'A valentine that arrives exactly one year too late.',
-      look:['Corset Top w/ Puff Sleeves','Heart Mask'],
-      synopsis:'A hotel corridor, a key with no number. A tight chamber piece about the door you should never have knocked on.' },
-    { t:'Camélia 22', y:'MMXXIII', run:'00:47', dir:'dreamxd0ki', style:'calligraphy', award:'Best Direction', rating:5, poster:'assets/nyc/films/05.jpg', src:'assets/nyc/video/05.mp4',
-      logline:'Twenty-two winters under glass.',
-      pull:'Love, grown out of season like a flower forced under glass.',
-      look:['Latex Turtle Neck Dress','Long Gloves'],
-      synopsis:'In a hothouse of masks, desire is engineered and never meant to survive the spring. The most beautiful thing we screened.' },
-    { t:'Cœur 07', y:'MMXXIII', run:'00:29', dir:"Pandora's Box", style:'neon', award:'Audience Award', rating:4, poster:'assets/nyc/films/06.jpg', src:'assets/nyc/video/06.mp4',
-      logline:'Seven hearts, none of them hers.',
-      pull:'A card game where the stakes are faces, not chips.',
-      look:['Scalloped Corset','Garter Belt'],
-      synopsis:'She wins every hand and loses the one thing she came to keep. Lean, wicked, unforgettable.' },
-    { t:'Pivoine Deux', y:'MMXXII', run:'00:55', dir:'Fatalinovaya', style:'calligraphy', award:'Best Costume', rating:5, poster:'assets/nyc/films/07.jpg', src:'assets/nyc/video/07.mp4',
-      logline:'Two peonies, one mirror.',
-      pull:'Twin sisters trade places until neither remembers which was the original.',
-      look:['Ornate Choker Collar','Long Skirt with Lace Insert','Platform Heels'],
-      synopsis:'A study of doubling and the vanity of being seen — and the reason Contrabounds took Best Costume.' },
-  ],
-
-  ivTitle:'Interviews',
-  INTERVIEWS:[
-    { who:'The Bride, on wearing the heart mask', q:'You never show your face all night. Why?', a:'“Because the mask is the honest part. The face is the costume — I take it off to come here.”' },
-    { who:'Contrabounds, on dressing the ball', q:'How do you design for people with no faces?', a:'“You dress the silhouette and the sound — the click of latex, the drag of lace. The body becomes the sentence.”' },
-    { who:'A guest of nine years', q:'What keeps you coming back?', a:'“Every year I leave one more face at that table. One day there won’t be any left, and that’s the point.”' },
-  ],
-
-  redTitle:'The Red Carpet',
-  RED:Array.from({length:8},(_,i)=>({ img:'assets/nyc/redcarpet/'+String(i+1).padStart(2,'0')+'.jpg', who:'Arrival Nº '+String(i+1).padStart(2,'0') })),
-
-  fashTitle:'The Fashion',
-  fashLead:'Contrabounds dressed every mask at the table — latex, lace and lacquer, cut like couture and worn like armour. The look analysis, piece by piece.',
-  WARDROBE:[
-    { img:'assets/nyc/looks/01.jpg', n:'Lace Collar Latex Mini Dress', code:'CB-FW24-01', mat:'Glossy PVC · Black', price:'€1,190' },
-    { img:'assets/nyc/looks/02.jpg', n:'Puff Shoulder Lace Collar Top', code:'CB-W-SS24-001', mat:'Latex · Black', price:'€890' },
-    { img:'assets/nyc/looks/03.jpg', n:'Latex Pencil Mini Skirt', code:'CB-W-SS24-002', mat:'Latex · Black', price:'€690' },
-    { img:'assets/nyc/looks/04.jpg', n:'Scallop Cutout Top', code:'CB-FWXX-01', mat:'Stretch Vinyl · Black', price:'€1,250' },
-    { img:'assets/nyc/looks/05.jpg', n:'Corset Top w/ Puff Sleeves', code:'CB-W-01-RED', mat:'Glossy PVC · Oxblood', price:'€1,450' },
-    { img:'assets/nyc/looks/06.jpg', n:'Heart Mask', code:'CB-W-07-RED', mat:'Moulded PVC · Red', price:'€520' },
-    { img:'assets/nyc/looks/07.jpg', n:'Long Chain Necklace', code:'CB-A-SS24-003', mat:'Silver', price:'€290' },
-    { img:'assets/nyc/looks/08.jpg', n:'Pointed Toe Pumps', code:'CB-S-SS24-007', mat:'Patent Leather · Black', price:'€590' },
-    { img:'assets/nyc/looks/09.jpg', n:'Opera Gloves', code:'CB-SS24-04', mat:'Latex · Black', price:'€550' },
-  ],
-
-  awardsTitle:'The Golden Heart',
-  awNote:'The festival’s highest honour — a heart cast in gold, given to those who broke the room open.',
-  LAURELS:[ { cat:'Grand Prix', by:'Jury MMXXV' }, { cat:'Best in Show', by:"Pandora's Box" }, { cat:'Best Costume', by:'Contrabounds' }, { cat:'Audience Award', by:'By invitation' } ],
-  TROPHIES:[
-    { img:'assets/nyc/awards/01.jpg', cat:'Best Film', film:'Rose Neuf' },
-    { img:'assets/nyc/awards/02.jpg', cat:'Best Direction', film:'Camélia 22' },
-    { img:'assets/nyc/awards/03.jpg', cat:'Grand Prix', film:'Œillet Sept' },
-    { img:'assets/nyc/awards/04.jpg', cat:'Best Costume', film:'Pivoine Deux' },
-  ],
-
-  ballTitle:'The Party',
-  BALL:Array.from({length:13},(_,i)=>'assets/nyc/'+String(i+1).padStart(2,'0')+'.jpg'),
-
-  annivTitle:'Anniversary',
-  annivNote:'For the club’s jubilee, the hosts assembled every year of the ball into one reel — a collage that never stops turning. Below: their portraits, year after year.',
-  COLLAGE:Array.from({length:13},(_,i)=>'assets/nyc/'+String(i+1).padStart(2,'0')+'.jpg'),
-  collageCap:'The Ball · MMXII — MMXXV',
-  HOSTS:Array.from({length:6},(_,i)=>({ img:'assets/nyc/hosts/'+String(i+1).padStart(2,'0')+'.jpg', name:'Host Nº '+String(i+1).padStart(2,'0') })),
-
-  poster:{ top:"Pandora's Box · MMXXV", left:'Be our valentine', right:'Feb 14 · 7PM — Late', bottom:'HEARTBREAKERS BALL', accent:['A','R','K'], handles:'@fatalinovaya   ×   @dreamxd0ki', image:'assets/nyc/poster.jpg' },
-  footBig:'Come as no one. Leave as someone else.',
-  handles:['@fatalinovaya','@dreamxd0ki'],
-  footCredit:'The Heartbreakers Issue · Created with |love| by @fatalinovaya × @dreamxd0ki · © 2025',
-  HERO_VIDEO:'assets/nyc/hero.mp4',
-};
-/* =======================================================================
-   ▲▲▲  КОНЕЦ CONFIG  ▲▲▲
-   ======================================================================= */
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const LAUREL='<svg viewBox="0 0 240 150" aria-hidden="true"><g stroke="currentColor" stroke-width="1.1" fill="none">'
-+'<path d="M120 138 C74 138 46 104 50 48"/><path d="M120 138 C166 138 194 104 190 48"/></g><g fill="currentColor">'
-+'<ellipse cx="50" cy="56" rx="10" ry="4" transform="rotate(-52 50 56)"/><ellipse cx="52" cy="78" rx="10" ry="4" transform="rotate(-38 52 78)"/>'
-+'<ellipse cx="60" cy="98" rx="10" ry="4" transform="rotate(-24 60 98)"/><ellipse cx="76" cy="116" rx="10" ry="4" transform="rotate(-10 76 116)"/>'
-+'<ellipse cx="190" cy="56" rx="10" ry="4" transform="rotate(52 190 56)"/><ellipse cx="188" cy="78" rx="10" ry="4" transform="rotate(38 188 78)"/>'
-+'<ellipse cx="180" cy="98" rx="10" ry="4" transform="rotate(24 180 98)"/><ellipse cx="164" cy="116" rx="10" ry="4" transform="rotate(10 164 116)"/></g></svg>';
-const stars=n=>'♥'.repeat(n)+'<span style="opacity:.3">♥</span>'.repeat(5-n);
-
-$('#preFest').textContent=CONFIG.intro.c0; $('#preNow').textContent=CONFIG.intro.now;
-$('#c0k').textContent=CONFIG.intro.c0; $('#c1').textContent=CONFIG.intro.c1; $('#c2').textContent=CONFIG.intro.c2; $('#c3').textContent=CONFIG.intro.c3;
-$('#enterBtn').textContent=CONFIG.intro.enter;
-$('#navBrand').textContent=CONFIG.nav.brand;
-$('#navLinks').innerHTML=CONFIG.nav.links.map(l=>'<a href="'+l[1]+'">'+l[0]+'</a>').join('');
-$('#mhBrand').textContent=CONFIG.mhBrand; $('#mhIssue').textContent=CONFIG.mhIssue;
-$('#coverlines').innerHTML=CONFIG.coverlines.map(c=>'<div class="cl serif">'+c+'</div>').join('');
-$('#cornerL').textContent=CONFIG.cornerL; $('#cornerR').textContent=CONFIG.cornerR; $('#scrollcue').textContent=CONFIG.scrollcue;
-$('#contentsTitle').textContent=CONFIG.contentsTitle; $('#contentsPg').textContent=CONFIG.contentsPg;
-$('#contentsList').innerHTML=CONFIG.CONTENTS.map(c=>'<a class="row" href="'+c.a+'"><span class="n">'+c.n+'</span><span class="t serif">'+c.t+'</span><span class="d">'+c.d+'</span></a>').join('');
-$('#editorTitle').textContent=CONFIG.editorTitle;
-$('#letterBody').innerHTML=CONFIG.letter.map(p=>'<p>'+p+'</p>').join('')+'<div class="sign">'+CONFIG.letterSign+'</div>';
-$('#filmsTitle').textContent=CONFIG.filmsTitle;
-$('#ivTitle').textContent=CONFIG.ivTitle;
-$('#ivBody').innerHTML=CONFIG.INTERVIEWS.map(v=>'<div class="who">'+v.who+'</div><div class="q">'+v.q+'</div><div class="a serif">'+v.a+'</div>').join('');
-$('#redTitle').textContent=CONFIG.redTitle;
-$('#fashTitle').textContent=CONFIG.fashTitle; $('#fashLead').textContent=CONFIG.fashLead;
-$('#awardsTitle').textContent=CONFIG.awardsTitle; $('#awNote').textContent=CONFIG.awNote;
-$('#ballTitle').textContent=CONFIG.ballTitle;
-$('#annivTitle').textContent=CONFIG.annivTitle; $('#annivNote').textContent=CONFIG.annivNote; $('#collageCap').textContent=CONFIG.collageCap;
-$('#footBig').textContent=CONFIG.footBig;
-$('#footRow').innerHTML=CONFIG.handles.map(h=>'<span class="lbl">'+h+'</span>').join('');
-$('#footCredit').innerHTML=CONFIG.footCredit.replace(/\|(.+?)\|/g,'<span class="love">$1</span>');
-
-function fillMq(el){ const u=CONFIG.marquee.map(w=>'<span>'+w+'</span><span class="d">✦</span>').join(''); el.innerHTML=u+u; }
-fillMq($('#mq')); fillMq($('#mq2'));
-
-let heroVid=null;
-(function cover(){
-  const slot=$('#coverSlot');
-  if(CONFIG.HERO_VIDEO){ const v=document.createElement('video'); v.src=CONFIG.HERO_VIDEO; v.autoplay=v.muted=v.loop=v.playsInline=true;
-    v.setAttribute('muted','');v.setAttribute('playsinline','');v.preload='auto'; v.onerror=()=>{}; slot.replaceWith(v); heroVid=v; }
-})();
-$('#soundToggle').onclick=function(){ if(!heroVid)return; heroVid.muted=!heroVid.muted; this.textContent=heroVid.muted?'♪ sound off':'♫ sound on'; if(!heroVid.muted) heroVid.play().catch(()=>{}); };
-
-(function intro(){
-  const fluid=$('#fluid'), count=$('#preCount'), pre=$('#pre'), cards=[...$$('#intro .card')], enter=$('#enterWrap'), introEl=$('#intro');
-  let p=0; const tick=setInterval(()=>{ p+=Math.max(1,Math.round((100-p)*0.07));
-    if(p>=100){p=100;clearInterval(tick);setTimeout(startCards,600);} fluid.setAttribute('y',(200-p*2).toFixed(1)); count.textContent=p+'%'; },80);
-  let i=0,t; function startCards(){ pre.classList.add('hide'); step(); }
-  function show(n){ cards.forEach(c=>c.classList.remove('on')); if(cards[n])cards[n].classList.add('on'); }
-  function step(){ show(i); i++; if(i<=cards.length){t=setTimeout(step,1700);} else {cards.forEach(c=>c.classList.remove('on')); enter.classList.add('on');} }
-  function go(){ clearInterval(tick); clearTimeout(t); introEl.classList.add('gone'); document.body.classList.add('entered'); setTimeout(()=>introEl.remove(),1000); }
-  $('#enterBtn').onclick=go; $('#skip').onclick=go;
-})();
-
-(function films(){
-  const box=$('#filmsGrid');
-  CONFIG.FILMS.forEach(f=>{
-    const card=document.createElement('div'); card.className='film reveal '+(f.style||'serif');
-    card.innerHTML='<div class="poster"><div class="pph"></div>'+
-      '<img class="pfoto" src="'+f.poster+'" alt="'+f.t+'" loading="lazy">'+
-      '<div class="stars">'+stars(f.rating||4)+'</div>'+(f.award?'<div class="award">♥ '+f.award+'</div>':'')+
-      '<div class="titleover"><div class="ft">'+f.t+'</div><div class="fm">'+(f.dir?'dir. '+f.dir+' · ':'')+f.y+'</div><div class="fl">'+(f.logline||'')+'</div></div></div>'+
-      '<div class="cap"><span>'+f.run+' · silent</span><span>review ›</span></div>';
-    const img=card.querySelector('.pfoto'); img.onload=function(){const ph=card.querySelector('.pph'); if(ph)ph.remove();}; img.onerror=function(){this.remove();};
-    card.onclick=()=>openFilm(f); box.appendChild(card);
+window.addEventListener('load', function(){
+  const el = document.getElementById('flipbook');
+  const pf = new St.PageFlip(el, {
+    width: 460, height: 640, size: 'stretch',
+    minWidth: 300, maxWidth: 700, minHeight: 400, maxHeight: 980,
+    maxShadowOpacity: 0.5, showCover: true, useMouseEvents: true,
+    mobileScrollSupport: true, drawShadow: true, flippingTime: 700
   });
-})();
+  pf.loadFromHTML(document.querySelectorAll('#flipbook .page'));
+  const total = pf.getPageCount();
+  const pgnum = document.getElementById('pgnum');
+  function upd(){ const p = pf.getCurrentPageIndex()+1; pgnum.textContent = p+' / '+total; }
+  pf.on('flip', upd); upd();
+  document.getElementById('next').onclick = ()=> pf.flipNext();
+  document.getElementById('prev').onclick = ()=> pf.flipPrev();
+  document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') pf.flipNext(); if(e.key==='ArrowLeft') pf.flipPrev(); });
 
-function openFilm(f){
-  const inner=$('#fpInner');
-  const lookHtml=(f.look&&f.look.length)?'<div class="fp-look"><b>The look — Contrabounds:</b><br>'+f.look.join(' · ')+'</div>':'';
-  inner.innerHTML='<div class="fp-img"><div class="iph"></div><img src="'+f.poster+'" alt="'+f.t+'"><span class="stamp">On the red carpet · '+f.y+'</span></div>'+
-    '<div class="fp-text"><div class="fp-kick">Review · A Pandora’s Box Picture</div>'+
-    '<div class="fp-title '+(f.style||'serif')+'">'+f.t+'</div>'+
-    '<div class="fp-stars">'+stars(f.rating||4)+'</div>'+
-    '<div class="fp-meta">'+(f.dir?'dir. '+f.dir+' · ':'')+f.y+' · silent · '+f.run+'</div>'+
-    (f.pull?'<div class="fp-pull">'+f.pull+'</div>':'')+
-    '<div class="fp-syn">'+(f.synopsis||'')+'</div>'+ lookHtml +
-    (f.award?'<div class="fp-award">♥ Winner — '+f.award+' · '+CONFIG.awardName+'</div>':'')+
-    '<span class="fp-watch">▷ Watch the teaser</span></div>';
-  const im=inner.querySelector('.fp-img img'); im.onload=function(){const ph=inner.querySelector('.iph'); if(ph)ph.remove();}; im.onerror=function(){this.remove();};
-  inner.querySelector('.fp-watch').onclick=()=>playFilm(f);
-  $('#filmpage').classList.add('open');
-}
-function closeFilm(){ $('#filmpage').classList.remove('open'); }
-$('#fpClose').onclick=closeFilm;
-$('#filmpage').addEventListener('click',e=>{ if(e.target.id==='filmpage') closeFilm(); });
-
-let filmTimer;
-function playFilm(f){
-  const pl=$('#player'), stage=$('#stage'); pl.classList.add('open');
-  const letters=[...f.t].map((ch,idx)=> ch===' '?'<span class="l" style="width:.34em">&nbsp;</span>':'<span class="l" style="animation-delay:'+(idx*0.06).toFixed(2)+'s">'+ch+'</span>').join('');
-  stage.innerHTML='<div class="titlecard '+(f.style||'serif')+'"><div class="kick">A Pandora’s Box Picture</div><div class="big2 serif">'+letters+'</div>'+
-    '<div class="credits">'+(f.dir?'directed by '+f.dir+' — ':'')+f.y+' · silent · '+f.run+'</div><div class="prog"><i></i></div></div>';
-  requestAnimationFrame(()=>{ const b=stage.querySelector('.prog i'); if(b)b.style.width='100%'; });
-  filmTimer=setTimeout(()=>{ stage.innerHTML=''; const v=document.createElement('video'); v.src=f.src; v.autoplay=true; v.controls=true; v.loop=true; v.playsInline=true;
-    v.onerror=()=>{ stage.innerHTML='<div class="titlecard '+(f.style||'serif')+'"><div class="big2 serif">'+f.t+'</div><div class="credits">clip coming soon — add '+f.src+'</div></div>'; };
-    stage.appendChild(v); },5000);
-}
-function closePlayer(){ clearTimeout(filmTimer); $('#player').classList.remove('open'); $('#stage').innerHTML=''; }
-$('#playerClose').onclick=closePlayer;
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closePlayer(); closeFilm(); } });
-
-function gallery(boxId,arr,label){
-  const box=$(boxId);
-  arr.forEach((item,i)=>{ const src=item.img||item; const cap=item.who||('Nº '+String(i+1).padStart(2,'0'));
-    const pl=document.createElement('div'); pl.className='plate reveal';
-    pl.innerHTML='<div class="fr"><img src="'+src+'" alt="'+cap+'" loading="lazy"></div><div class="cp"><span class="no">'+cap+'</span><span>'+label+'</span></div>';
-    pl.querySelector('img').onerror=function(){ this.remove(); const ph=document.createElement('div'); ph.className='pph'; pl.querySelector('.fr').prepend(ph); };
-    box.appendChild(pl); });
-}
-gallery('#redGrid',CONFIG.RED,'red carpet');
-gallery('#platesGrid',CONFIG.BALL,'the ball');
-
-(function fashion(){
-  const box=$('#looksGrid');
-  CONFIG.WARDROBE.forEach(g=>{ const el=document.createElement('div'); el.className='look reveal';
-    el.innerHTML='<div class="pic"><div class="lph"></div><img src="'+g.img+'" alt="'+g.n+'" loading="lazy"></div>'+
-      '<div class="info"><div class="n serif">'+g.n+'</div><div class="code">'+g.code+'</div><div class="mat">'+g.mat+'</div><div class="price">'+g.price+'</div></div>';
-    const img=el.querySelector('img'); img.onload=function(){const ph=el.querySelector('.lph'); if(ph)ph.remove();}; img.onerror=function(){this.remove();};
-    box.appendChild(el); });
-})();
-
-(function awards(){
-  const lr=$('#laurelsRow');
-  CONFIG.LAURELS.forEach(a=>{ const el=document.createElement('div'); el.className='laurel-badge reveal';
-    el.innerHTML=LAUREL+'<div class="txt"><span class="cat serif">'+a.cat+'</span><span class="by">'+a.by+'</span></div>'; lr.appendChild(el); });
-  const tg=$('#trophyGrid');
-  CONFIG.TROPHIES.forEach(t=>{ const el=document.createElement('div'); el.className='trophy reveal';
-    el.innerHTML='<div class="pic"><div class="tph"></div><img src="'+t.img+'" alt="'+CONFIG.awardName+'" loading="lazy"></div>'+
-      '<div class="info"><div class="aw">'+CONFIG.awardName+'</div><div class="n serif">'+t.cat+'</div><div class="c">'+t.film+'</div></div>';
-    const img=el.querySelector('img'); img.onload=function(){const ph=el.querySelector('.tph'); if(ph)ph.remove();}; img.onerror=function(){this.remove();};
-    tg.appendChild(el); });
-})();
-
-(function hosts(){
-  const box=$('#hostsGrid');
-  CONFIG.HOSTS.forEach(h=>{ const el=document.createElement('div'); el.className='host reveal';
-    el.innerHTML='<img src="'+h.img+'" alt="'+h.name+'" loading="lazy"><div class="cr">'+h.name+'</div>';
-    el.querySelector('img').onerror=function(){ this.remove(); const ph=document.createElement('div'); ph.className='hph'; el.prepend(ph); };
-    box.appendChild(el); });
-})();
-
-/* ANNIVERSARY collage — auto-cycling reel */
-(function collage(){
-  const box=$('#collage'); const imgs=[];
-  CONFIG.COLLAGE.forEach((src,i)=>{ const im=document.createElement('img'); im.className='c-img'; im.src=src; im.alt='reel '+i; im.loading='lazy';
-    im.onerror=function(){ this.remove(); const k=imgs.indexOf(im); if(k>-1)imgs.splice(k,1); };
-    box.insertBefore(im,box.querySelector('.c-cap')); imgs.push(im); });
-  let idx=0;
-  function tick(){ if(!imgs.length) return; imgs.forEach(im=>im.classList.remove('show'));
-    const cur=imgs[idx%imgs.length]; if(cur) cur.classList.add('show'); idx++; }
-  tick(); setInterval(tick,2600);
-})();
-
-(function poster(){
-  const p=CONFIG.poster; $('#pTop').textContent=p.top; $('#pLeft').textContent=p.left; $('#pRight').textContent=p.right; $('#pHd').textContent=p.handles;
-  const acc=new Set((p.accent||[]).map(c=>c.toUpperCase())), used={};
-  $('#pBottom').innerHTML=[...p.bottom].map(ch=>{ const u=ch.toUpperCase(); if(acc.has(u)&&!used[u]){used[u]=1; return '<span class="r">'+ch+'</span>';} return ch; }).join('');
-  if(p.image){ const im=new Image(); im.onload=()=>{ const el=document.createElement('img'); el.src=p.image; el.alt=p.bottom; $('#pMph').parentNode.insertBefore(el,$('#pMph')); $('#pMph').remove(); }; im.src=p.image; }
-})();
-
-(function reveals(){ const io=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);} }),{threshold:.1});
-  $$('.reveal').forEach(el=>io.observe(el)); })();
+  document.getElementById('laurel').innerHTML =
+   '<svg viewBox="0 0 240 150" aria-hidden="true"><g stroke="currentColor" stroke-width="1.2" fill="none">'
+   +'<path d="M120 138 C74 138 46 104 50 48"/><path d="M120 138 C166 138 194 104 190 48"/></g><g fill="currentColor">'
+   +'<ellipse cx="50" cy="56" rx="10" ry="4" transform="rotate(-52 50 56)"/><ellipse cx="52" cy="78" rx="10" ry="4" transform="rotate(-38 52 78)"/>'
+   +'<ellipse cx="60" cy="98" rx="10" ry="4" transform="rotate(-24 60 98)"/><ellipse cx="76" cy="116" rx="10" ry="4" transform="rotate(-10 76 116)"/>'
+   +'<ellipse cx="190" cy="56" rx="10" ry="4" transform="rotate(52 190 56)"/><ellipse cx="188" cy="78" rx="10" ry="4" transform="rotate(38 188 78)"/>'
+   +'<ellipse cx="180" cy="98" rx="10" ry="4" transform="rotate(24 180 98)"/><ellipse cx="164" cy="116" rx="10" ry="4" transform="rotate(10 164 116)"/></g></svg>';
+});
 </script>
 </body>
 </html>
