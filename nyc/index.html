@@ -3,383 +3,252 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PANDORA'S BOX — The Heartbreakers Issue · MMXXV</title>
+<title>You are invited — Pandora's Box</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* =======================================================================
-   PANDORA'S BOX — THE HEARTBREAKERS ISSUE — флипбук-зин (StPageFlip)
-   Editorial / brutalist. Листается как журнал. Тексты/ассеты — в разметке.
-   ======================================================================= */
 :root{
-  --black:#0b0a0a; --paper:#f2ede3; --ink:#12100f; --pink:#ff2d78; --red:#e6122a;
-  --gold:#c2a15a; --mut:#8a847a;
-  --disp:'Anton',Impact,sans-serif; --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Archivo',system-ui,sans-serif; --mono:'Space Mono',monospace;
+  --bg:#0a0708; --ink:#efe4d6; --dim:#9a897c; --red:#c11026; --wine:#5c0d18; --gold:#c2a15a; --pink:#ff5a86;
+  --serif:'Cormorant Garamond',Georgia,serif; --disp:'Anton',Impact,sans-serif;
+  --script:'Pinyon Script',cursive; --mono:'Space Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{background:#050505;color:var(--ink);font-family:var(--sans);overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background-image:radial-gradient(ellipse at 50% 30%,#1a1416,#050505 70%)}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;
-  align-items:center;padding:14px 22px;color:#e9e3d8;mix-blend-mode:difference;pointer-events:none}
-.topbar .b{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
-#stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:44px 12px}
-#flipbook{background:transparent}
-.nav{position:fixed;bottom:18px;left:0;right:0;z-index:20;display:flex;gap:16px;justify-content:center;align-items:center}
-.nav button{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  background:rgba(0,0,0,.5);color:#e9e3d8;border:1px solid #3a3a3a;border-radius:100px;padding:9px 18px;cursor:pointer;backdrop-filter:blur(4px)}
-.nav button:hover{background:#e9e3d8;color:#000}
-.nav .pg{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#9a948a;min-width:70px;text-align:center}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:hidden}
+.mono{font-family:var(--mono);text-transform:uppercase}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:80;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-/* ============ PAGE base ============ */
-.page{overflow:hidden}
-.pg-in{position:relative;width:100%;height:100%;padding:34px 30px;overflow:hidden}
-.black{background:var(--black);color:#efe7db}
-.paper{background:var(--paper);color:var(--ink)}
-.pink{background:var(--pink);color:#12100f}
-.red{background:var(--red);color:#f7efe6}
-.cap{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
-.kick{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase}
-.serif{font-family:var(--serif)}
-.disp{font-family:var(--disp);text-transform:uppercase;line-height:.86;letter-spacing:.005em}
-.foot{position:absolute;left:30px;right:30px;bottom:16px;display:flex;justify-content:space-between;
-  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+/* ============ TABLE / HERO ============ */
+.table{position:relative;height:100dvh;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 42%,#2a1418 0%,#140a0c 55%,#0a0708 100%)}
+.table .cloth{position:absolute;inset:0;background-image:
+  repeating-linear-gradient(45deg,rgba(0,0,0,.14) 0 2px,transparent 2px 8px),
+  repeating-linear-gradient(-45deg,rgba(120,10,25,.06) 0 2px,transparent 2px 9px);mix-blend-mode:overlay}
+.table .vig{position:absolute;inset:0;box-shadow:inset 0 0 200px rgba(0,0,0,.75);pointer-events:none}
 
-.ph{background:#15100f;position:relative;overflow:hidden}
-.ph::before{content:attr(data-l);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6a625a}
-.ph.g{background:radial-gradient(ellipse at 45% 32%,#3a2a2e,#0c0a0a 78%)}
+.scene{perspective:1300px;width:min(430px,86vw);height:min(600px,74vh);position:relative;z-index:5}
+.card{position:relative;width:100%;height:100%;transform-style:preserve-3d;cursor:pointer;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card.flipped{transform:rotateY(180deg) scale(1.02)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:6px;overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 2px 0 rgba(255,255,255,.05) inset}
+/* front — invitation */
+.front{background:linear-gradient(160deg,#f3 e9dd,#e7d8c4);background:linear-gradient(160deg,#f2e7d8,#e4d3bd);
+  color:#2a1a12;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 30px;
+  border:1px solid #d8c4a8}
+.front .frame{position:absolute;inset:14px;border:1px solid #b89a72;border-radius:3px;pointer-events:none}
+.front .frame::after{content:"";position:absolute;inset:5px;border:1px solid rgba(184,154,114,.5)}
+.front .kick{font-family:var(--mono);font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:#8a6a4a}
+.front .you{font-family:var(--script);font-size:clamp(44px,10vw,72px);color:var(--wine);line-height:.9;margin:14px 0}
+.front .sub{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.4vw,22px);color:#3a2418}
+.front .date{font-family:var(--disp);font-size:clamp(30px,7vw,52px);color:#2a1a12;margin-top:16px;letter-spacing:.02em}
+.front .foot{position:absolute;bottom:26px;left:0;right:0;font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#8a6a4a}
+.front .seal{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);width:52px;height:52px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,#e0324a,#8a0d1c);display:flex;align-items:center;justify-content:center;color:#ffd9df;font-size:22px;box-shadow:0 6px 14px rgba(0,0,0,.4)}
+/* back — video */
+.back{transform:rotateY(180deg);background:#000}
+.back video,.back .vph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.back .vph{background:radial-gradient(ellipse at 50% 40%,#3a0a14,#000 78%)}
+.back .ovl{position:absolute;left:0;right:0;bottom:0;padding:22px;background:linear-gradient(transparent,rgba(0,0,0,.8));z-index:2}
+.back .ovl .t{font-family:var(--disp);font-size:clamp(24px,5vw,38px);color:#f2ede3;line-height:.95}
 
-/* ============ COVER ============ */
-.cover{position:relative;width:100%;height:100%;background:#0b0a0a;overflow:hidden}
-.cover .bg{position:absolute;inset:0}
-.cover .bg .ph{width:100%;height:100%}
-.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.15) 45%,rgba(0,0,0,.85))}
-.cover .top{position:absolute;top:26px;left:26px;right:26px;z-index:2;display:flex;justify-content:space-between;color:#efe7db}
-.cover .title{position:absolute;top:64px;left:0;right:0;z-index:2;text-align:center;color:#f2ede3}
-.cover .title .m{font-family:var(--disp);font-size:clamp(38px,9vw,74px);letter-spacing:.02em;line-height:.9}
-.cover .lines{position:absolute;left:26px;right:26px;bottom:70px;z-index:2;color:#f2ede3}
-.cover .lines .l{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.6vw,26px);line-height:1.08;margin-top:8px}
-.cover .lines .l b{font-style:normal;font-weight:500}
-.cover .lines .l .r{color:var(--pink)}
-.cover .barcode{position:absolute;right:26px;bottom:24px;z-index:2;color:#efe7db;text-align:right}
-.cover .issue{position:absolute;left:26px;bottom:24px;z-index:2;color:#efe7db}
+/* stickers around */
+.sticker{position:absolute;z-index:6;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  padding:8px 12px;background:#f2e7d8;color:#2a1a12;box-shadow:0 8px 20px rgba(0,0,0,.45);user-select:none}
+.sticker.tape{background:rgba(220,200,160,.5);border:1px dashed rgba(90,60,30,.4);color:#4a3420}
+.s1{top:16%;left:12%;transform:rotate(-9deg);background:var(--red);color:#fff}
+.s2{bottom:18%;right:10%;transform:rotate(7deg)}
+.s3{top:22%;right:14%;transform:rotate(5deg);font-family:var(--script);text-transform:none;font-size:20px;color:var(--wine);background:#f2e7d8}
+.s4{bottom:14%;left:14%;transform:rotate(-5deg)}
+.hint{position:absolute;bottom:5vh;left:0;right:0;text-align:center;z-index:6;animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.scrollcue{position:absolute;bottom:5vh;left:0;right:0;text-align:center;z-index:6;opacity:0;transition:opacity .6s;pointer-events:none}
+.scrollcue.on{opacity:1}
 
-/* ============ CONTENTS / big number ============ */
-.bignum{font-family:var(--disp);font-size:min(46vh,300px);line-height:.8;color:var(--ink)}
-.split{display:grid;grid-template-columns:1fr 1fr;height:100%}
-.split>div{display:flex;flex-direction:column;justify-content:center;padding:24px}
-.toc a{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(0,0,0,.18);color:inherit;text-decoration:none}
-.toc .n{font-family:var(--mono);font-size:11px;color:var(--red);width:30px}
-.toc .t{font-family:var(--serif);font-size:clamp(16px,2.4vw,24px);flex:1}
-.toc .d{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+/* ============ SCROLL SECTIONS ============ */
+.sec{padding:16vh 6vw;position:relative}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 1s,transform 1s}
+.reveal.in{opacity:1;transform:none}
+.lead{max-width:820px;margin:0 auto;text-align:center}
+.lead .k{margin-bottom:22px}
+.lead p{font-weight:300;font-size:clamp(22px,3.2vw,40px);line-height:1.4}
+.lead em{font-style:italic;color:var(--pink)}
 
-/* ============ EDITOR ============ */
-.letter{font-family:var(--sans);font-size:clamp(11px,1.5vw,14px);line-height:1.55;column-count:1}
-.letter p{margin-bottom:.9em}
-.letter p:first-of-type::first-letter{font-family:var(--disp);float:left;font-size:4.4em;line-height:.7;padding:6px 10px 0 0;color:var(--red)}
+/* ============ DETECTIVE BOARD ============ */
+.board-head{text-align:center;margin-bottom:7vh}
+.board-head h2{font-family:var(--disp);font-size:clamp(34px,7vw,86px);line-height:.9;text-transform:uppercase}
+.board-head .k{margin-top:14px}
+.board-wrap{max-width:1100px;margin:0 auto}
+.board{width:100%;height:auto;display:block;background:#120a0c;border:1px solid #2a1418}
+.board .thread{stroke:var(--red);stroke-width:1.6;fill:none;opacity:.7;stroke-dasharray:4 3}
+.board .node rect,.board .node .imgbox{transition:transform .3s}
+.board .node:hover .imgbox{stroke:var(--pink);stroke-width:2}
+.board .pin{fill:var(--gold)}
+.board .cap{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;fill:#cdbfae}
+.board .cap.dim{fill:#8a7c6c;font-size:10px}
+.board .reeltitle{font-family:'Anton',sans-serif;font-size:34px;fill:#f2ede3;text-transform:uppercase}
+.board .imgbox{fill:#241014;stroke:#3a1a20;stroke-width:1}
+.board .imglabel{font-family:'Space Mono',monospace;font-size:10px;fill:#7a6a5c;text-transform:uppercase}
+.board .play{fill:#f2ede3}
 
-/* ============ FILM REVIEW ============ */
-.rev{display:grid;grid-template-rows:auto auto 1fr auto;height:100%;gap:10px}
-.rev .ttl{font-family:var(--disp);font-size:clamp(34px,8vw,72px);line-height:.82}
-.rev .stars{color:var(--red);letter-spacing:2px;font-size:14px}
-.rev .body{font-size:clamp(10px,1.4vw,12.5px);line-height:1.5;column-count:2;column-gap:18px}
-.rev .pull{font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,30px);line-height:1.1;border-left:2px solid var(--red);padding-left:12px}
-
-/* ============ PULL QUOTE (interview) ============ */
-.bigquote{font-family:var(--sans);font-weight:700;font-size:clamp(26px,5.4vw,52px);line-height:1.02;letter-spacing:-.01em}
-.bigquote .op{color:var(--red)}
-
-/* ============ FASHION ============ */
-.unap{font-family:var(--serif);font-size:clamp(34px,7vw,64px);line-height:.9}
-.unap .u{color:var(--red)}
-.lookgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-.lookgrid .it{display:flex;flex-direction:column;gap:5px}
-.lookgrid .it .ph{aspect-ratio:3/4}
-.lookgrid .it .nm{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase}
-.lookgrid .it .pr{font-family:var(--mono);font-size:7.5px;color:var(--mut)}
-
-/* ============ COLLAGE (party) ============ */
-.collage{position:relative;width:100%;height:100%}
-.collage .word{position:absolute;font-family:var(--disp);color:var(--pink);font-size:min(30vh,220px);line-height:.8;z-index:1}
-.collage .tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:6px;z-index:2;mix-blend-mode:normal}
-.collage .tiles .ph{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
-
-/* ============ AWARDS ============ */
-.laurelwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;text-align:center}
-.laurel{width:64%;color:var(--gold)}
-.laurel svg{width:100%;height:auto}
-
-@media(max-width:520px){ .rev .body{column-count:1} }
+.footer{padding:14vh 6vw 12vh;text-align:center;border-top:1px solid #2a1418}
+.footer .big{font-family:var(--serif);font-style:italic;font-size:clamp(38px,8vw,110px);color:var(--pink);line-height:.95}
+.footer .credit{margin-top:8vh}
 </style>
 </head>
 <body>
-<div class="topbar">
-  <span class="b">Pandora's Box ©</span>
-  <span class="b">The Heartbreakers Issue — MMXXV</span>
-</div>
+<div class="grain"></div>
 
-<div id="stage">
-  <div id="flipbook">
+<!-- ============ INVITATION ON THE TABLE ============ -->
+<section class="table" id="table">
+  <div class="cloth"></div>
+  <span class="sticker s1">14 / 02</span>
+  <span class="sticker s2 tape">members only</span>
+  <span class="sticker s3">be our valentine</span>
+  <span class="sticker s4 tape">Nº 01 · NYC</span>
 
-    <!-- 1. COVER -->
-    <div class="page" data-density="hard">
-      <div class="cover">
-        <div class="bg"><div class="ph g" data-l="cover — assets/nyc/hero"></div></div>
-        <div class="top"><span class="kick">Nº 01 · February</span><span class="kick">New York</span></div>
-        <div class="title">
-          <div class="m">Pandora's</div><div class="m">Box</div>
-        </div>
-        <div class="lines">
-          <div class="l">The masked dinner that <b>broke the city open</b></div>
-          <div class="l">Seven silent films, <b class="r">one golden heart</b></div>
-          <div class="l">Inside <b>Contrabounds</b> — the label of the ball</div>
-        </div>
-        <div class="issue kick">The Heartbreakers Issue</div>
-        <div class="barcode kick">be our<br>valentine</div>
+  <div class="scene" id="scene">
+    <div class="card" id="card">
+      <div class="face front">
+        <div class="frame"></div>
+        <div class="kick">Pandora's Box requests the pleasure</div>
+        <div class="you serif">You are<br>invited</div>
+        <div class="sub">to the Heartbreakers Ball</div>
+        <div class="date">14 · 02</div>
+        <div class="seal">♥</div>
+        <div class="foot">New York · by invitation only</div>
+      </div>
+      <div class="face back">
+        <div class="vph" id="vph"></div>
+        <div class="ovl"><div class="t">Heartbreakers<br>Ball</div></div>
       </div>
     </div>
-
-    <!-- 2. MASTHEAD -->
-    <div class="page">
-      <div class="pg-in black">
-        <div class="kick" style="color:var(--pink)">Masthead</div>
-        <div class="disp" style="font-size:clamp(30px,7vw,56px);margin-top:10px">The<br>Heartbreakers<br>Issue</div>
-        <div style="margin-top:20px;font-size:12px;line-height:1.7;max-width:34ch;color:#cfc7bc">
-          A once-a-year magazine from the masked dinner known only as Pandora's Box.
-          Films screened in silence. Faces left at the table. Clothes by Contrabounds.
-        </div>
-        <div style="margin-top:22px" class="cap">Editors — @fatalinovaya × @dreamxd0ki</div>
-        <div class="cap">Season — MMXXV · Uranus in Gemini</div>
-        <div class="foot"><span>Pandora's Box</span><span>02</span></div>
-      </div>
-    </div>
-
-    <!-- 3. CONTENTS -->
-    <div class="page">
-      <div class="pg-in paper">
-        <div class="split">
-          <div><div class="bignum">01</div></div>
-          <div>
-            <div class="kick" style="color:var(--red)">Contents</div>
-            <nav class="toc" style="margin-top:8px">
-              <a><span class="n">02</span><span class="t serif">Masthead</span><span class="d">who we are</span></a>
-              <a><span class="n">04</span><span class="t serif">Editor's Letter</span><span class="d">from the hosts</span></a>
-              <a><span class="n">06</span><span class="t serif">The Films</span><span class="d">reviews</span></a>
-              <a><span class="n">12</span><span class="t serif">Interview</span><span class="d">the cast speaks</span></a>
-              <a><span class="n">16</span><span class="t serif">The Fashion</span><span class="d">Contrabounds</span></a>
-              <a><span class="n">22</span><span class="t serif">The Party</span><span class="d">in pictures</span></a>
-              <a><span class="n">28</span><span class="t serif">The Golden Heart</span><span class="d">awards</span></a>
-            </nav>
-          </div>
-        </div>
-        <div class="foot"><span>Contents</span><span>03</span></div>
-      </div>
-    </div>
-
-    <!-- 4. EDITOR'S LETTER -->
-    <div class="page">
-      <div class="pg-in black">
-        <div class="split">
-          <div style="justify-content:flex-start;padding-top:30px">
-            <div class="kick" style="color:var(--pink)">Editor's Letter</div>
-            <div class="letter" style="margin-top:12px;color:#d8d0c5">
-              <p>Every February we open this house down to its basement, and every February people arrive as themselves and leave as someone they only imagined.</p>
-              <p>Inside: seven films screened in silence, the faces that walked our carpet, the clothes they were reborn in, and the golden heart we handed to the ones who broke the room open.</p>
-              <p>Read it the way you'd wear a mask — as a beautiful way to disappear. Be our valentine.</p>
-              <p style="font-family:var(--serif);font-style:italic;color:var(--gold)">— The Hosts</p>
-            </div>
-          </div>
-          <div style="justify-content:center;align-items:flex-end">
-            <div class="disp" style="font-size:min(42vh,260px);color:var(--pink);line-height:.78;text-align:right">MM<br>XXV</div>
-          </div>
-        </div>
-        <div class="foot"><span>New year, same me</span><span>04</span></div>
-      </div>
-    </div>
-
-    <!-- 5. FILM REVIEW -->
-    <div class="page">
-      <div class="pg-in paper">
-        <div class="rev">
-          <div>
-            <div class="kick" style="color:var(--red)">Review · A Pandora's Box Picture</div>
-            <div class="ttl">Rose<br>Neuf</div>
-            <div class="stars">♥♥♥♥♥</div>
-          </div>
-          <div class="pull">By the last course, no one — not even she — remembers who she came as.</div>
-          <div class="body">
-            <p>On the ninth February she returns to the same masked table. Each rose she is handed marks a face she has already shed. A hypnotic, wordless spiral about the vanity of coming back.</p>
-            <p>Dir. Fatalinovaya · MMXXV · silent · 00:42. Winner — Best Film, The Golden Heart. The look: Contrabounds Lace Collar Latex Mini Dress, Long Chain Necklace, Pointed Toe Pumps.</p>
-          </div>
-          <div></div>
-        </div>
-        <div class="foot"><span>The Films</span><span>06</span></div>
-      </div>
-    </div>
-
-    <!-- 6. FILM STILL full-bleed -->
-    <div class="page">
-      <div class="pg-in black" style="padding:0">
-        <div class="ph g" data-l="still — assets/nyc/films/01" style="position:absolute;inset:0"></div>
-        <div style="position:absolute;left:22px;bottom:22px;z-index:2;color:#f2ede3">
-          <div class="kick" style="color:var(--pink)">Rose Neuf — MMXXV</div>
-          <div class="disp" style="font-size:clamp(24px,6vw,44px);margin-top:6px">Nine roses,<br>one for each<br>year she<br>came back</div>
-        </div>
-        <div class="foot" style="color:#cfc7bc"><span>Still</span><span>07</span></div>
-      </div>
-    </div>
-
-    <!-- 7. INTERVIEW pull quote -->
-    <div class="page">
-      <div class="pg-in black">
-        <div class="kick" style="color:var(--pink)">Interview — The Bride</div>
-        <div class="bigquote" style="margin-top:16px;color:#f2ede3">
-          <span class="op">(“)</span> The mask is the honest part. The face is the costume — I take it off to come here.
-        </div>
-        <div class="foot"><span>The cast speaks</span><span>12</span></div>
-      </div>
-    </div>
-
-    <!-- 8. INTERVIEW columns -->
-    <div class="page">
-      <div class="pg-in paper">
-        <div class="kick" style="color:var(--red)">Contrabounds, on dressing the ball</div>
-        <div style="margin-top:14px;font-size:12px;line-height:1.55;column-count:2;column-gap:18px">
-          <p style="margin-bottom:.9em"><b>How do you design for people with no faces?</b></p>
-          <p style="margin-bottom:.9em">“You dress the silhouette and the sound — the click of latex, the drag of lace. The body becomes the sentence. Every mask at that table was cut like couture and worn like armour.”</p>
-          <p style="margin-bottom:.9em"><b>And the heart mask?</b></p>
-          <p>“A valentine you can't take off until dawn. That's the whole idea of the ball — you become the gift.”</p>
-        </div>
-        <div style="margin-top:12px" class="cap">Photo — assets/nyc/redcarpet</div>
-        <div class="ph g" data-l="portrait — redcarpet/01" style="height:34%;margin-top:8px"></div>
-        <div class="foot"><span>Interview</span><span>13</span></div>
-      </div>
-    </div>
-
-    <!-- 9. FASHION Unapologetic -->
-    <div class="page">
-      <div class="pg-in paper">
-        <div class="unap"><span class="u">U</span>napologetic</div>
-        <div style="margin-top:12px;font-size:11.5px;line-height:1.5;max-width:40ch">
-          Contrabounds constructs worlds, not clothes — nightlife, rebellion, fantasy. Latex, lace and lacquer, cut like couture. The look analysis, piece by piece.
-        </div>
-        <div class="lookgrid">
-          <div class="it"><div class="ph" data-l="looks/01"></div><span class="nm">Lace Collar Dress</span><span class="pr">CB-FW24-01 · €1,190</span></div>
-          <div class="it"><div class="ph" data-l="looks/02"></div><span class="nm">Puff Collar Top</span><span class="pr">CB-W-SS24-001 · €890</span></div>
-          <div class="it"><div class="ph" data-l="looks/05"></div><span class="nm">Corset Top Red</span><span class="pr">CB-W-01-RED · €1,450</span></div>
-          <div class="it"><div class="ph" data-l="looks/06"></div><span class="nm">Heart Mask</span><span class="pr">CB-W-07-RED · €520</span></div>
-        </div>
-        <div class="foot"><span>The Fashion — Contrabounds</span><span>16</span></div>
-      </div>
-    </div>
-
-    <!-- 10. FASHION look display grid -->
-    <div class="page">
-      <div class="pg-in black">
-        <div class="kick" style="color:var(--pink)">Contrabounds — 2025 collection · look display</div>
-        <div class="lookgrid" style="grid-template-columns:repeat(4,1fr);margin-top:14px">
-          <div class="it"><div class="ph g" data-l="look 01"></div><span class="nm" style="color:#cfc7bc">Look 01</span></div>
-          <div class="it"><div class="ph g" data-l="look 02"></div><span class="nm" style="color:#cfc7bc">Look 02</span></div>
-          <div class="it"><div class="ph g" data-l="look 03"></div><span class="nm" style="color:#cfc7bc">Look 03</span></div>
-          <div class="it"><div class="ph g" data-l="look 04"></div><span class="nm" style="color:#cfc7bc">Look 04</span></div>
-          <div class="it"><div class="ph g" data-l="look 05"></div><span class="nm" style="color:#cfc7bc">Look 05</span></div>
-          <div class="it"><div class="ph g" data-l="look 06"></div><span class="nm" style="color:#cfc7bc">Look 06</span></div>
-          <div class="it"><div class="ph g" data-l="look 07"></div><span class="nm" style="color:#cfc7bc">Look 07</span></div>
-          <div class="it"><div class="ph g" data-l="look 08"></div><span class="nm" style="color:#cfc7bc">Look 08</span></div>
-        </div>
-        <div class="foot"><span>Look display</span><span>17</span></div>
-      </div>
-    </div>
-
-    <!-- 11. PARTY collage -->
-    <div class="page">
-      <div class="pg-in" style="padding:0;background:#0b0a0a">
-        <div class="collage">
-          <div class="word" style="left:-4px;bottom:6px;">TAKE</div>
-          <div class="tiles">
-            <div class="ph g" data-l="ball/01"></div><div class="ph g" data-l="ball/02"></div><div class="ph g" data-l="ball/03"></div>
-            <div class="ph g" data-l="ball/04"></div><div class="ph g" data-l="ball/05"></div><div class="ph g" data-l="ball/06"></div>
-            <div class="ph g" data-l="ball/07"></div><div class="ph g" data-l="ball/08"></div><div class="ph g" data-l="ball/09"></div>
-          </div>
-        </div>
-        <div class="foot" style="color:#cfc7bc;z-index:3"><span>The Party</span><span>22</span></div>
-      </div>
-    </div>
-
-    <!-- 12. PARTY pink ??? -->
-    <div class="page">
-      <div class="pg-in pink">
-        <div class="disp" style="font-size:min(40vh,240px);color:#0b0a0a;line-height:.8">? ? ?</div>
-        <div style="position:absolute;right:30px;bottom:60px;max-width:22ch;font-size:11px;line-height:1.5;color:#0b0a0a">
-          The bass shoots out from the speakers, each beat thundering its way through the floor to the soles of her feet. It's spiritual, it possesses her. The club is a disco ball, and she is one of the mirror tiles.
-        </div>
-        <div class="foot" style="color:#3a0f1c"><span>Late night</span><span>23</span></div>
-      </div>
-    </div>
-
-    <!-- 13. AWARDS -->
-    <div class="page">
-      <div class="pg-in black">
-        <div class="laurelwrap">
-          <div class="kick" style="color:var(--gold)">The awards · MMXXV</div>
-          <div class="laurel" id="laurel"></div>
-          <div class="disp" style="font-size:clamp(26px,6vw,48px);color:#f2ede3">The Golden<br>Heart</div>
-          <div style="font-size:11px;color:#cfc7bc;max-width:30ch">Best Film — Rose Neuf · Best Direction — Camélia 22 · Grand Prix — Œillet Sept · Best Costume — Pivoine Deux</div>
-        </div>
-        <div class="foot"><span>Official Selection</span><span>28</span></div>
-      </div>
-    </div>
-
-    <!-- 14. BACK COVER -->
-    <div class="page" data-density="hard">
-      <div class="pg-in black" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px">
-        <div class="disp" style="font-size:clamp(30px,8vw,64px);color:#f2ede3">Come as<br>no one</div>
-        <div class="serif" style="font-style:italic;font-size:20px;color:var(--pink)">Leave as someone else.</div>
-        <div class="cap" style="margin-top:20px">@fatalinovaya × @dreamxd0ki</div>
-        <div class="cap">Pandora's Box Film Festival™ · © 2025</div>
-      </div>
-    </div>
-
   </div>
+
+  <div class="hint lbl" id="hint">reach for it · click to open</div>
+  <div class="scrollcue lbl" id="scrollcue">scroll ↓</div>
+  <div class="vig"></div>
+</section>
+
+<!-- ============ LEAD ============ -->
+<section class="sec">
+  <div class="lead reveal">
+    <div class="k lbl">One night a year</div>
+    <p>You arrived with a face. You'll leave with none. Everything you saw that night — the reel, the look, the room — <em>is connected</em>. Follow the thread.</p>
+  </div>
+</section>
+
+<!-- ============ DETECTIVE BOARD ============ -->
+<section class="sec" id="evidence">
+  <div class="board-head reveal">
+    <h2>The Evidence</h2>
+    <div class="k lbl">the reel · the look · the carpet — all one case</div>
+  </div>
+  <div class="board-wrap reveal">
+    <svg class="board" viewBox="0 0 1100 720" role="img" aria-label="Detective board connecting the film reel to the look and the red carpet">
+      <!-- threads (red string) from center reel to each node -->
+      <path class="thread" d="M550 330 C400 250 300 200 210 165"/>
+      <path class="thread" d="M550 330 C700 250 800 210 900 168"/>
+      <path class="thread" d="M560 400 C440 500 340 540 235 560"/>
+      <path class="thread" d="M560 400 C690 510 800 545 895 560"/>
+      <path class="thread" d="M550 430 C540 520 535 560 545 600"/>
+
+      <!-- CENTER: the reel -->
+      <g class="node">
+        <rect class="imgbox" x="430" y="290" width="240" height="150" rx="4"/>
+        <text class="imglabel" x="440" y="308">still — assets/nyc/films/01</text>
+        <polygon class="play" points="536,352 536,388 566,370"/>
+        <text class="reeltitle" x="430" y="278">Rose Neuf</text>
+        <text class="cap dim" x="432" y="462">the reel · MMXXV · silent</text>
+      </g>
+
+      <!-- NODE 1: look piece -->
+      <g class="node">
+        <rect class="imgbox" x="90" y="70" width="150" height="190" rx="4"/>
+        <text class="imglabel" x="100" y="90">looks/01</text>
+        <circle class="pin" cx="165" cy="70" r="5"/>
+        <text class="cap" x="90" y="282">The Look — Lace Collar Dress</text>
+        <text class="cap dim" x="90" y="300">Contrabounds · CB-FW24-01</text>
+      </g>
+
+      <!-- NODE 2: look piece -->
+      <g class="node">
+        <rect class="imgbox" x="860" y="70" width="150" height="190" rx="4"/>
+        <text class="imglabel" x="870" y="90">looks/06</text>
+        <circle class="pin" cx="935" cy="70" r="5"/>
+        <text class="cap" x="860" y="282">The Look — Heart Mask</text>
+        <text class="cap dim" x="860" y="300">Contrabounds · CB-W-07-RED</text>
+      </g>
+
+      <!-- NODE 3: red carpet -->
+      <g class="node">
+        <rect class="imgbox" x="95" y="470" width="150" height="180" rx="4"/>
+        <text class="imglabel" x="105" y="490">redcarpet/01</text>
+        <circle class="pin" cx="170" cy="470" r="5"/>
+        <text class="cap" x="95" y="672">Red Carpet — Arrival Nº 01</text>
+      </g>
+
+      <!-- NODE 4: red carpet -->
+      <g class="node">
+        <rect class="imgbox" x="855" y="470" width="150" height="180" rx="4"/>
+        <text class="imglabel" x="865" y="490">redcarpet/03</text>
+        <circle class="pin" cx="930" cy="470" r="5"/>
+        <text class="cap" x="855" y="672">Red Carpet — Arrival Nº 03</text>
+      </g>
+
+      <!-- NODE 5: award -->
+      <g class="node">
+        <rect class="imgbox" x="470" y="600" width="160" height="90" rx="4" style="fill:#241a0c;stroke:#4a3a1a"/>
+        <text class="cap" x="486" y="640" style="fill:var(--gold);font-size:14px">The Golden Heart</text>
+        <text class="cap dim" x="486" y="660">Winner — Best Film</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="big serif">Come as no one. Leave as someone else.</div>
+  <div class="credit lbl">@fatalinovaya × @dreamxd0ki · Pandora's Box · © 2025</div>
 </div>
 
-<div class="nav">
-  <button id="prev">‹ prev</button>
-  <span class="pg" id="pgnum">drag the corner</span>
-  <button id="next">next ›</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
-window.addEventListener('load', function(){
-  const el = document.getElementById('flipbook');
-  const pf = new St.PageFlip(el, {
-    width: 460, height: 640, size: 'stretch',
-    minWidth: 300, maxWidth: 700, minHeight: 400, maxHeight: 980,
-    maxShadowOpacity: 0.5, showCover: true, useMouseEvents: true,
-    mobileScrollSupport: true, drawShadow: true, flippingTime: 700
-  });
-  pf.loadFromHTML(document.querySelectorAll('#flipbook .page'));
-  const total = pf.getPageCount();
-  const pgnum = document.getElementById('pgnum');
-  function upd(){ const p = pf.getCurrentPageIndex()+1; pgnum.textContent = p+' / '+total; }
-  pf.on('flip', upd); upd();
-  document.getElementById('next').onclick = ()=> pf.flipNext();
-  document.getElementById('prev').onclick = ()=> pf.flipPrev();
-  document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') pf.flipNext(); if(e.key==='ArrowLeft') pf.flipPrev(); });
+const $=s=>document.querySelector(s);
+const scene=$('#scene'), card=$('#card'), hint=$('#hint'), scrollcue=$('#scrollcue');
+let flipped=false;
 
-  document.getElementById('laurel').innerHTML =
-   '<svg viewBox="0 0 240 150" aria-hidden="true"><g stroke="currentColor" stroke-width="1.2" fill="none">'
-   +'<path d="M120 138 C74 138 46 104 50 48"/><path d="M120 138 C166 138 194 104 190 48"/></g><g fill="currentColor">'
-   +'<ellipse cx="50" cy="56" rx="10" ry="4" transform="rotate(-52 50 56)"/><ellipse cx="52" cy="78" rx="10" ry="4" transform="rotate(-38 52 78)"/>'
-   +'<ellipse cx="60" cy="98" rx="10" ry="4" transform="rotate(-24 60 98)"/><ellipse cx="76" cy="116" rx="10" ry="4" transform="rotate(-10 76 116)"/>'
-   +'<ellipse cx="190" cy="56" rx="10" ry="4" transform="rotate(52 190 56)"/><ellipse cx="188" cy="78" rx="10" ry="4" transform="rotate(38 188 78)"/>'
-   +'<ellipse cx="180" cy="98" rx="10" ry="4" transform="rotate(24 180 98)"/><ellipse cx="164" cy="116" rx="10" ry="4" transform="rotate(10 164 116)"/></g></svg>';
+/* video on the back */
+(function(){ const v=document.createElement('video'); v.src='../assets/nyc/hero.mp4';
+  v.muted=true; v.loop=true; v.playsInline=true; v.setAttribute('muted',''); v.setAttribute('playsinline','');
+  v.preload='auto'; v.onerror=()=>{}; const vph=$('#vph'); vph.replaceWith(v); v.className=''; window.__inviteVid=v; })();
+
+/* 3D tilt toward cursor */
+scene.addEventListener('pointermove', e=>{
+  if(flipped) return;
+  const r=scene.getBoundingClientRect();
+  const cx=(e.clientX-r.left)/r.width-0.5, cy=(e.clientY-r.top)/r.height-0.5;
+  card.style.transform='rotateX('+(-cy*16).toFixed(2)+'deg) rotateY('+(cx*16).toFixed(2)+'deg)';
 });
+scene.addEventListener('pointerleave', ()=>{ if(!flipped) card.style.transform='rotateX(0deg) rotateY(0deg)'; });
+
+/* click → flip into video */
+card.addEventListener('click', ()=>{
+  flipped=!flipped;
+  card.classList.toggle('flipped', flipped);
+  if(flipped){
+    card.style.transform='';
+    if(window.__inviteVid) window.__inviteVid.play().catch(()=>{});
+    hint.style.display='none'; scrollcue.classList.add('on');
+  } else {
+    scrollcue.classList.remove('on'); hint.style.display='';
+  }
+});
+
+/* reveal on scroll */
+(function(){ const io=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);} }),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el)); })();
 </script>
 </body>
 </html>
