@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Enter the Ball — Pandora's Box</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --blush:#e7c4c9; --gold:#c2a15a; --wine:#5c0d18; }
+  *{box-sizing:border-box}
+  body{margin:0;background:#080405;color:#fff;font-family:'Barlow',sans-serif;overflow-x:hidden}
+  .serif{font-family:'Instrument Serif',serif}
+  /* ===== liquid glass (по твоему промпту) ===== */
+  .liquid-glass{background:rgba(255,255,255,.02);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+    border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
+  .liquid-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+    background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .liquid-glass-strong{background:rgba(255,255,255,.03);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
+    box-shadow:4px 4px 4px rgba(0,0,0,.05),inset 0 1px 1px rgba(255,255,255,.15);position:relative;overflow:hidden}
+  .liquid-glass-strong::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+    background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.2) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.2) 80%,rgba(255,255,255,.5) 100%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  /* ===== motion ===== */
+  .bw{display:inline-block;margin-right:.2em;opacity:0;filter:blur(12px);transform:translateY(34px);animation:bw .8s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes bw{55%{opacity:.55;filter:blur(5px)}100%{opacity:1;filter:blur(0);transform:none}}
+  .rv{opacity:0;filter:blur(8px);transform:translateY(18px);animation:rv .9s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rv{to{opacity:1;filter:blur(0);transform:none}}
+  #hv{transition:none}
+</style>
+</head>
+<body>
+<section class="relative min-h-[100dvh] w-full overflow-hidden flex flex-col">
+  <!-- full-bleed video -->
+  <video id="hv" class="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-center z-0"
+    style="width:118%;height:118%;opacity:0" autoplay muted playsinline preload="auto" loop
+    src="../assets/nyc/hero.mp4"></video>
+  <div class="absolute inset-0 z-[1]" style="background:linear-gradient(180deg,rgba(8,4,5,.45),rgba(8,4,5,.15) 42%,rgba(8,4,5,.85))"></div>
+
+  <!-- NAV -->
+  <nav class="relative z-50 flex items-center justify-between px-6 lg:px-14 pt-5">
+    <div class="liquid-glass rounded-full w-12 h-12 flex items-center justify-center rv" style="animation-delay:.1s">
+      <span class="serif italic text-2xl" style="color:var(--blush)">♥</span>
+    </div>
+    <div class="hidden md:flex liquid-glass rounded-full p-1.5 items-center gap-1 rv" style="animation-delay:.25s">
+      <a class="px-3 py-2 text-sm font-medium text-white/90 rounded-full" href="#">The Ball</a>
+      <a class="px-3 py-2 text-sm font-medium text-white/90 rounded-full" href="#">The Films</a>
+      <a class="px-3 py-2 text-sm font-medium text-white/90 rounded-full" href="#">Contrabounds</a>
+      <a class="px-3 py-2 text-sm font-medium text-white/90 rounded-full" href="#">Archive</a>
+      <a class="ml-1 bg-white text-black rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap" href="#">Claim your mask ↗</a>
+    </div>
+    <div class="w-12 h-12 md:hidden"></div>
+  </nav>
+
+  <!-- HERO CONTENT -->
+  <div class="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 pt-10">
+    <div class="liquid-glass rounded-full inline-flex items-center gap-2 pl-1 pr-3 py-1 rv" style="animation-delay:.4s">
+      <span class="bg-white text-black rounded-full px-3 py-1 text-xs font-semibold">New</span>
+      <span class="text-sm text-white/90">The MMXXV Issue is live</span>
+    </div>
+
+    <h1 id="head" class="serif italic text-white mt-6 leading-[.82] tracking-[-3px] text-5xl md:text-7xl lg:text-[5.4rem] max-w-3xl"
+      style="color:#f6ecec"></h1>
+
+    <p class="mt-5 text-sm md:text-base text-white/85 max-w-xl font-light leading-snug rv" style="animation-delay:1.2s">
+      One night a year the city sets a single table. Faces become masks, names become lace and lacquer — a valentine kept only by those who were let in.
+    </p>
+
+    <div class="flex items-center gap-6 mt-7 rv" style="animation-delay:1.4s">
+      <a href="../nyc/" class="liquid-glass-strong rounded-full px-6 py-3 text-sm font-medium text-white inline-flex items-center gap-2">
+        Enter the ball <span>↗</span>
+      </a>
+      <a href="../" class="text-sm font-medium text-white/90 inline-flex items-center gap-2">
+        <span>▶</span> Read the issue
+      </a>
+    </div>
+
+    <div class="flex items-stretch gap-4 mt-10 rv" style="animation-delay:1.6s">
+      <div class="liquid-glass rounded-3xl p-5 w-[210px] text-left">
+        <div class="serif italic text-4xl leading-none" style="color:#f6ecec">14 · 02</div>
+        <div class="text-xs text-white/80 font-light mt-2">One night, once a year</div>
+      </div>
+      <div class="liquid-glass rounded-3xl p-5 w-[210px] text-left">
+        <div class="serif italic text-4xl leading-none" style="color:#f6ecec">VII</div>
+        <div class="text-xs text-white/80 font-light mt-2">Silent films · one golden heart</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTNERS -->
+  <div class="relative z-10 flex flex-col items-center gap-4 pb-8 rv" style="animation-delay:1.8s">
+    <div class="liquid-glass rounded-full px-4 py-1 text-xs font-medium text-white/90">By invitation only · New York</div>
+    <div class="flex items-center flex-wrap justify-center gap-8 md:gap-14 serif italic text-2xl md:text-3xl tracking-tight" style="color:#f6ecec">
+      <span>Pandora's Box</span><span>Contrabounds</span><span>@fatalinovaya</span><span>@dreamxd0ki</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* headline blur-in word-by-word */
+  (function(){
+    const words='Come as no one. Leave as someone else.'.split(' ');
+    document.getElementById('head').innerHTML = words.map((w,i)=>
+      '<span class="bw" style="animation-delay:'+(0.5+i*0.09).toFixed(2)+'s">'+w+'</span>').join('');
+  })();
+  /* video fade-in (rAF, no CSS transition) */
+  (function(){
+    const v=document.getElementById('hv'); let raf;
+    function fade(to,dur){ cancelAnimationFrame(raf); const from=parseFloat(v.style.opacity)||0,t0=performance.now();
+      (function s(t){ const k=Math.min(1,(t-t0)/dur); v.style.opacity=(from+(to-from)*k).toFixed(3); if(k<1) raf=requestAnimationFrame(s); })(t0); }
+    v.addEventListener('loadeddata',()=>{ v.play&&v.play().catch(()=>{}); fade(1,700); });
+    if(v.readyState>=2){ v.play&&v.play().catch(()=>{}); fade(1,700); }
+  })();
+</script>
+</body>
+</html>
